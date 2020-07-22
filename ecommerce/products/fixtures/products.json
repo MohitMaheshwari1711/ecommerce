@@ -1,0 +1,44 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "T-shirt",
+        "slug": "t-shirt",
+        "description": "Buy it :)",
+        "price": "39.99",
+        "image": "products/5953889295428384/5953889295428384.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2020-06-20T18:24:55.842Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Cap",
+        "slug": "cap-80kt",
+        "description": "Awesome cap",
+        "price": "12.95",
+        "image": "products/27773508190347685/27773508190347685.jpg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2020-06-20T18:24:55.842Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "computer",
+        "slug": "pc",
+        "description": "Super cool computer :)",
+        "price": "5000.23",
+        "image": "products/35691172297838072/35691172297838072.jpg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2020-06-21T16:36:17.109Z"
+    }
+}
+]

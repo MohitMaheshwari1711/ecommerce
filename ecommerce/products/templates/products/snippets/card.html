@@ -1,0 +1,30 @@
+<div class="col-sm-6 col-md-6 col-lg-4 ftco-animate">
+    <div class="product">
+        <a href="{{ instance.get_absolute_url }}" class="img-prod"><img class="img-fluid" src='{{ instance.image.url }}'
+                alt="Colorlib Template">
+            <!-- <span class="status">30%</span> -->
+            <div class="overlay"></div>
+        </a>
+        <div class="text py-3 px-3">
+            <h3><a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></h3>
+            <div class="d-flex">
+                <div class="pricing">
+                    <p class="price"><span class="price-sale">${{instance.price}}</span>
+                    </p>
+                </div>
+                <div class="rating">
+                    <p class="text-right">
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                    </p>
+                </div>
+            </div>
+            <p class="bottom-area d-flex px-3">
+                {% include 'products/snippets/update-cart.html' with product=instance cart=cart %}
+            </p>
+        </div>
+    </div>
+</div>
