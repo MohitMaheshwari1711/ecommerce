@@ -44,7 +44,11 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 class GuestForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            "class": "form-control"
+        })
+    )
 
 
 class LoginForm(forms.Form):

@@ -21,6 +21,7 @@ def cart_detail_api_view(request):
         "image_url": x.image.url
         } for x in cart_obj.products.all()]
     cart_data = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
+    print(cart_data)
     return JsonResponse(cart_data)
 
 

@@ -2,18 +2,29 @@
 
 <form method="POST" action="{{ action_url }}"> {% csrf_token %}
     {% if next_url %}
-        <input type="hidden" name="next" value='{{ next_url }}' />
+    <input type="hidden" name="next" value='{{ next_url }}' />
     {% endif %}
     {% if address_type %}
-        <input type="hidden" name="address_type" value='{{ address_type }}' />
+    <input type="hidden" name="address_type" value='{{ address_type }}' />
     {% endif %}
-
-    {% for address in address_qs %}
-    <label for='address-{{ address.id }}'>
-        <input type="radio" id='address-{{ address.id }}' name="shipping_address" value='{{ address.id }}' />
-        {{ address.address_line_1 }}
-    </label><br />
-    {% endfor %}
+    <h5 class="mb-2 mt-2 billing">Use previous address</h5>
+    <div class="row justify-content-center">
+        {% for address in address_qs %}
+        {% if forloop.counter < 4 %}
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for='address-{{ address.id }}'>
+                    <input style="margin-left: 50%;" type="radio" id='address-{{ address.id }}' name="shipping_address"
+                        value='{{ address.id }}' />
+                    <br />{{ address.address_line_1 }},
+                    {% if address.address_line_2 %}{{ address.address_line_2 }},{% endif %} {{ address.city }},
+                    {{ address.state }}, {{ address.country }}, {{ address.postal_code }}
+                </label><br />
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
     <button type="submit" class="btn btn-success">Use Address</button>
 </form>
 

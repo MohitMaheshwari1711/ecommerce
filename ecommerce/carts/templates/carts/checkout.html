@@ -1,64 +1,52 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-{% if not billing_profile %}
-<div class="row text-center">
-    <div class="col-12 col-md-6">
-        <p class="lead">Login</p>
-        {% include 'accounts/snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
-    </div>
-    <div class="col-12 col-md-6">
-        Continue as Guest
-        {% url "guest_register" as guest_register_url %}
-        {% include 'accounts/snippets/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-0 bread">Checkout</h1>
+            </div>
+        </div>
     </div>
 </div>
-{% else %}
-{% if not object.shipping_address %}
-<div class="row">
-    <div class="col-12">
-        <p class="lead">Shipping Address</p>
-        <hr />
-    </div>
-    <div class="col-6">
-        {% url "checkout_address_create" as checkout_address_create %}
-        {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='shipping' %}
 
-    </div>
-    <div class="col-6">
-        {% url 'checkout_address_reuse' as checkout_address_reuse %}
-        {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='shipping' action_url=checkout_address_reuse %}
-    </div>
-</div>
-{% elif not object.billing_address %}
-<div class="row">
-    <div class="col-12">
-        <p class="lead">Billing Address</p>
-        <hr />
-    </div>
-    <div class="col-6">
-        {% url "checkout_address_create" as checkout_address_create %}
-        {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='billing' %}
-    </div>
-    <div class="col-6">
-        {% url 'checkout_address_reuse' as checkout_address_reuse %}
-        {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='billing' action_url=checkout_address_reuse %}
-    </div>
-</div>
-{% else %}
-<h1>Finalize Checkout</h1>
-<p>Cart Items: {% for product in object.cart.products.all %}{{ product }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-<p>Shipping Address: {{ object.shipping_address.get_address }}</p>
-<p>Billing Address: {{ object.billing_address.get_address }}</p>
-<p>Cart Total: {{ object.cart.total }}</p>
-<p>Shipping Total: {{object.shipping_total}}</p>
-<p>Order Total: {{object.total}}</p>
-<form class="form" method="POST" action="">{% csrf_token %}
-    <button type="submit" class="btn btn-success">Checkout</button>
-</form>
-{% endif %}
-
-{% endif %}
+<section class="ftco-section pt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            {% if not billing_profile %}
+            <div class="col-xl-6">
+                <div class="col-xl-12 ftco-animate">
+                    <div class="radio login-method">
+                        <label class="mr-3"><input class="login-radio" type="radio" name="optradio" checked> Login
+                        </label>
+                        <label><input class="guest-radio" type="radio" name="optradio"> Continue as guest</label>
+                    </div>
+                </div>
+                <div class="col-xl-12 ftco-animate mt-4 form-1">
+                    {% include 'accounts/snippets/login-form.html' with form=login_form next_url=request.build_absolute_uri %}
+                </div>
+                <div class="col-xl-12 ftco-animate mt-4 form-2" style="display: none;">
+                    {% url "guest_register" as guest_register_url %}
+                    {% include 'accounts/snippets/guest-form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+                </div>
+            </div>
+            {% else %}
+            {% if not object.shipping_address %}
+            <div class="col-xl-8 ftco-animate">
+                {% url "checkout_address_create" as checkout_address_create %}
+                {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='shipping' %}
+            </div>
+            <div class="col-xl-8 ftco-animate">
+                <div>
+                    {% url 'checkout_address_reuse' as checkout_address_reuse %}
+                    {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='shipping' action_url=checkout_address_reuse %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+</section>
 
 {% endblock %}

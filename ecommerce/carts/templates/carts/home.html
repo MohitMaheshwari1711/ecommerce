@@ -56,7 +56,7 @@
                     <h3>Cart Totals</h3>
                     <p class="d-flex">
                         <span>Subtotal</span>
-                        <span>${{ cart.subtotal }}</span>
+                        <span class="cart-subtotal">${{ cart.subtotal }}</span>
                     </p>
                     <p class="d-flex">
                         <span>Discount</span>
@@ -65,10 +65,10 @@
                     <hr>
                     <p class="d-flex total-price">
                         <span>Total (tax included)</span>
-                        <span>${{ cart.total }}</span>
+                        <span class="cart-total-2">${{ cart.total }}</span>
                     </p>
                 </div>
-                <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
+                <p class="text-center"><a href='{% url "cart:checkout" %}' class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
                 </p>
             </div>
         </div>

@@ -1,0 +1,25 @@
+<form method="POST" id="login_data" action='{% if action_url %}{{ action_url }}{% else %}{% url "login" %}{% endif %}'
+    class="billing-form"> {% csrf_token %}
+    {% if next_url %}
+    <input type="hidden" name="next" value='{{ next_url }}' />
+    {% endif %}
+    <h3 class="mb-4 billing-heading">Login</h3>
+    <div class="row align-items-end">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{form.email}}
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="password">Password</label>
+                {{ form.password }}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <p><a href="javascript:$('#login_data').submit();" class="btn btn-primary py-3 px-5">Login</a></p>
+        </div>
+    </div>
+</form>

@@ -1,5 +1,16 @@
 $(document).ready(function () {
 
+    window.addEventListener("click", function(event) {
+        if(event.target.className == 'login-radio') {
+            $(".form-1").css("display", "block");
+            $(".form-2").css("display", "none");
+        } else if (event.target.className == 'guest-radio') {
+            $(".form-1").css("display", "none");
+            $(".form-2").css("display", "block");
+        }
+    });
+
+
     let contactForm = $(".contact-form");
     let contactFormMethod = contactForm.attr("method");
     let contactFormEndpoint = contactForm.attr("action");
@@ -116,7 +127,6 @@ $(document).ready(function () {
             method: updateCartMethod,
             data: data,
             success: function (data) {
-                console.log(data)
                 let hiddenCartItemRemoveForm = $(".cart-item-remove-form");
                 if (data.products.length > 0) {
                     productRows.html(" ")
@@ -128,8 +138,8 @@ $(document).ready(function () {
                         cartBody.prepend("<tr class='text-center cart-product'><td class='product-remove'>"+newCartItemRemoveForm.html()+"</td><td class='image-prod'><div class='img' style='background-image:url("+value.image_url+"'></div></td><td class='product-name'><h3>"+value.name+"</h3></td><td class='price'>" + value.price + "</td><tr>")
                         i--
                     })
-                    cartBody.find(".cart-subtotal").text(data.subtotal)
-                    cartBody.find(".cart-total").text(data.total)
+                    document.getElementsByClassName("cart-subtotal")[0].innerHTML = "$"+data.subtotal
+                    document.getElementsByClassName("cart-total-2")[0].innerHTML = "$"+data.total
                 } else {
                     window.location.href = currentUrl
                 }
