@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     let contactForm = $(".contact-form");
     let contactFormMethod = contactForm.attr("method");
     let contactFormEndpoint = contactForm.attr("action");

@@ -8,7 +8,7 @@ class ContactForm(forms.Form):
     fullname = forms.CharField(widget=forms.TextInput(
         attrs={
             "class": "form-control",
-            "placeholder": "Your full name"
+            "placeholder": "Your Name"
         })
     )
     email = forms.EmailField(widget=forms.EmailInput(

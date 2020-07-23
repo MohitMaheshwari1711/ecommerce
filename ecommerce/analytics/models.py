@@ -13,7 +13,9 @@ from .utils import get_client_ip
 User = settings.AUTH_USER_MODEL
 
 FORCE_SESSION_TO_ONE = getattr(settings, 'FORCE_SESSION_TO_ONE', False)
-FORCE_INACTIVE_USER_ENDSESSION = getattr(settings, 'FORCE_INACTIVE_USER_ENDSESSION', False)
+FORCE_INACTIVE_USER_ENDSESSION = getattr(
+    settings, 'FORCE_INACTIVE_USER_ENDSESSION', False)
+
 
 class ObjectViewed(models.Model):
     user = models.ForeignKey(User, blank=True, null=True)
@@ -24,7 +26,7 @@ class ObjectViewed(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "%s viewed on %s" %(self.content_object, self.timestamp)
+        return "%s viewed on %s" % (self.content_object, self.timestamp)
 
     class Meta:
         ordering = ['-timestamp']
@@ -34,24 +36,19 @@ class ObjectViewed(models.Model):
 
 def object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
+    if request.user.is_authenticated():
+        user = request.user
+    else:
+        user = None
     new_view_obj = ObjectViewed.objects.create(
-        user = request.user,
-        content_type = c_type,
-        object_id = instance.id,
-        ip_address = get_client_ip(request)
+        user=user,
+        content_type=c_type,
+        object_id=instance.id,
+        ip_address=get_client_ip(request)
     )
 
 
 object_viewed_signal.connect(object_viewed_receiver)
-
-
-
-
-
-
-
-
-
 
 
 class UserSession(models.Model):
@@ -61,7 +58,6 @@ class UserSession(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     ended = models.BooleanField(default=False)
-
 
     def end_session(self):
         session_key = self.session_key
@@ -76,29 +72,31 @@ class UserSession(models.Model):
         return self.ended
 
 
-
 def post_save_session_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        qs = UserSession.objects.filter(user = instance.user, ended=False, active=False).exclude(id=instance.id)
+        qs = UserSession.objects.filter(
+            user=instance.user, ended=False, active=False).exclude(id=instance.id)
         for i in qs:
             i.end_session()
     if not instance.active and not instance.ended:
         instance.end_session()
 
+
 if FORCE_SESSION_TO_ONE:
-    post_save.connect(post_save_session_receiver, sender=UserSession) 
+    post_save.connect(post_save_session_receiver, sender=UserSession)
 
 
 def post_save_user_changed_receiver(sender, instance, created, *args, **kwargs):
     if not created:
         if instance.is_active == False:
-            qs = UserSession.objects.filter(user=instance.user, ended=False, active=False)
+            qs = UserSession.objects.filter(
+                user=instance.user, ended=False, active=False)
             for i in qs:
                 i.end_session()
 
+
 if FORCE_INACTIVE_USER_ENDSESSION:
     post_save.connect(post_save_user_changed_receiver, sender=User)
-
 
 
 def user_logged_in_receiver(sender, instance, request, *args, **kwargs):
@@ -113,6 +111,3 @@ def user_logged_in_receiver(sender, instance, request, *args, **kwargs):
 
 
 user_logged_in.connect(user_logged_in_receiver)
-
-
-

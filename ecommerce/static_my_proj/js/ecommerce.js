@@ -19,7 +19,6 @@ $(document).ready(function () {
         let contactFormSubmitBtn = contactForm.find("[type='submit']");
         let contactFormSubmitBtnTxt = contactFormSubmitBtn.text();
         let contactFormData = contactForm.serialize();
-        let thisForm = $(this);
         displaySubmitting(contactFormSubmitBtn, "", true)
         $.ajax({
             method: contactFormMethod,
@@ -27,11 +26,7 @@ $(document).ready(function () {
             data: contactFormData,
             success: function (data) {
                 contactForm[0].reset();
-                $.alert({
-                    title: "Success!",
-                    content: data.message,
-                    theme: "modern"
-                });
+                window.alert(data.message);
                 displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false)
             },
             error: function (errorData) {
@@ -40,11 +35,7 @@ $(document).ready(function () {
                 $.each(jsonData, function (key, value) {
                     msg += key + ": " + value[0].message + "<br/>"
                 })
-                $.alert({
-                    title: "Oops!",
-                    content: msg,
-                    theme: "modern"
-                });
+                window.alert(msg);
                 displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false)
             }
         })
@@ -106,11 +97,7 @@ $(document).ready(function () {
                 }
             },
             error: function (errorData) {
-                $.alert({
-                    title: "Oops!",
-                    content: "An error occured.",
-                    theme: "modern"
-                });
+                window.alert('An error occured.')
             }
         })
     })
@@ -129,7 +116,8 @@ $(document).ready(function () {
             method: updateCartMethod,
             data: data,
             success: function (data) {
-                let hiddenCartItemRemoveForm = $(".cart-item-remove-form")
+                console.log(data)
+                let hiddenCartItemRemoveForm = $(".cart-item-remove-form");
                 if (data.products.length > 0) {
                     productRows.html(" ")
                     i = data.products.length;
@@ -137,8 +125,7 @@ $(document).ready(function () {
                         let newCartItemRemoveForm = hiddenCartItemRemoveForm.clone();
                         newCartItemRemoveForm.css("display", "block");
                         newCartItemRemoveForm.find(".cart-item-product-id").val(value.id);
-                        cartBody.prepend("<tr><th scope=\"row\">" + i + "</th><td><a href='" + value.url + "'>" + value.name +
-                            "</a>" + newCartItemRemoveForm.html() + "</td><td>" + value.price + "</td><tr>")
+                        cartBody.prepend("<tr class='text-center cart-product'><td class='product-remove'>"+newCartItemRemoveForm.html()+"</td><td class='image-prod'><div class='img' style='background-image:url("+value.image_url+"'></div></td><td class='product-name'><h3>"+value.name+"</h3></td><td class='price'>" + value.price + "</td><tr>")
                         i--
                     })
                     cartBody.find(".cart-subtotal").text(data.subtotal)
@@ -148,11 +135,7 @@ $(document).ready(function () {
                 }
             },
             error: function (errorData) {
-                $.alert({
-                    title: "Oops!",
-                    content: "An error occured.",
-                    theme: "modern"
-                });
+                window.alert('An error occured.')
             }
         })
     }

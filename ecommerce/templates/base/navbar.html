@@ -36,7 +36,13 @@
         {% endif %}
         <li class="nav-item cta cta-colored">
             <a href="{{ cart_url }}" class="nav-link">
-                <span class="icon-shopping_cart navbar-cart-count">[{{ request.session.cart_items }}]</span>
+              <span class="icon-shopping_cart navbar-cart-count">
+                {% if request.session.cart_items %}
+                  {{ request.session.cart_items }}
+                {% else %}
+                [0]
+                {% endif %}
+              </span>
             </a>
         </li>
       </ul>
