@@ -1,57 +1,55 @@
-<form id="billing_address" class="billing-form" method="POST"
-    action='{% if action_url %}{{ action_url }}{% else %}{% url "login" %}{% endif %}'> {% csrf_token %}
-    <h3 class="mb-4 billing-heading">{{ address_type }} Address</h3>
-    <div class="row align-items-end">
-        {% if next_url %}
-        <input type="hidden" name="next" value='{{ next_url }}' />
-        {% endif %}
-        {% if address_type %}
+  
+<form method="POST" id="address_data" class="billing-form" action='{% if action_url %}{{ action_url }}{% else %}{% url "login" %}{% endif %}'> {% csrf_token %}
+    {% if next_url %}
+    <input type="hidden" name="next" value='{{ next_url }}' />
+    {% endif %}
+    {% if address_type %}
         <input type="hidden" name="address_type" value='{{ address_type }}' />
-        {% endif %}
-        <div class="col-md-12">
+        <!-- <h3 class="mb-4 billing-heading">{{ address_type }} Address</h3> -->
+    {% endif %}
+    <!-- {{ form.as_p }} -->
+    <div class="row align-items-end">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="address_line_1">Address Line 1</label>
-                {{ form.address_line_1 }}
+                {{form.address_line_1}}
             </div>
         </div>
-        <div class="w-100"></div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="address_line_2">Address Line 2</label>
-                {{ form.address_line_2 }}
+                {{form.address_line_2}}
             </div>
         </div>
-        <div class="w-100"></div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="city">City</label>
-                {{ form.city }}
+                {{form.city}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="country">Country</label>
+                {{form.country}}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="state">State</label>
-                {{ form.state }}
-            </div>
-        </div>
-        <div class="w-100"></div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="country">Country</label>
-                {{ form.country }}
+                {{form.state}}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="postal_code">Postal Code</label>
-                {{ form.postal_code }}
+                {{form.postal_code}}
             </div>
         </div>
         <div class="col-md-4">
 
         </div>
-        <div class="col-md-4 ml-4">
-            <p><a href="javascript:$('#billing_address').submit();" class="btn btn-primary py-3 px-5">Submit</a></p>
+        <div class="col-md-7" style="padding-left: 52px;">
+            <p><a href="javascript:$('#address_data').submit();" class="btn btn-primary py-3 px-5">Submit</a></p>
         </div>
     </div>
 </form>

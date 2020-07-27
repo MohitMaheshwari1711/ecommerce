@@ -1,7 +1,4 @@
-<form id="myform_id" method="POST" action='{% url "cart:update" %}' data-endpoint='{% url "cart:update" %}'
-    class="form form-product-ajax"> {% csrf_token %}
+<form method="POST" action='{% url "cart:update" %}' data-endpoint='{% url "cart:update" %}' class="form form-product-ajax"> {% csrf_token %}
     <input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}" />
-    <a href="javascript:$('#myform_id').submit();">
-        <span class="ion-ios-close"></span>
-    </a>
+    <button type="submit" class="btn btn-link btn-sm" style="color: #007bff; height: 1px !important; border: 0px solid rgba(0, 0, 0, 0.05) !important; padding: 0px; cursor: pointer;">Remove ?</button>
 </form>

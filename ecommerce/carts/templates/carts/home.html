@@ -21,7 +21,7 @@
                     <table class="table cart-table">
                         <thead class="thead-primary">
                             <tr class="text-center">
-                                <th>&nbsp;</th>
+                                <th>#</th>
                                 <th>&nbsp;</th>
                                 <th>Product</th>
                                 <th>Price</th>
@@ -30,14 +30,13 @@
                         <tbody class="cart-body">
                             {% for product in cart.products.all %}
                             <tr class="text-center cart-product">
-                                <td class="product-remove">
-                                    {% include 'carts/snippets/remove-product.html' with product_id=product.id %}
-                                </td>
+                                <td class="product-name">{{ forloop.counter }}</td>
                                 <td class="image-prod">
                                     <div class="img" style="background-image:url('{{ product.image.url }}');"></div>
                                 </td>
                                 <td class="product-name">
                                     <h3>{{ product.title }}</h3>
+                                    {% include 'carts/snippets/remove-product.html' with product_id=product.id %}
                                 </td>
                                 <td class="price">${{ product.price }}</td>
                             </tr>

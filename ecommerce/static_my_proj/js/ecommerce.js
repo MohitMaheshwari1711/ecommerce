@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    window.addEventListener("click", function(event) {
-        if(event.target.className == 'login-radio') {
+    window.addEventListener("click", function (event) {
+        if (event.target.className == 'login-radio') {
             $(".form-1").css("display", "block");
             $(".form-2").css("display", "none");
         } else if (event.target.className == 'guest-radio') {
@@ -9,6 +9,7 @@ $(document).ready(function () {
             $(".form-2").css("display", "block");
         }
     });
+
 
 
     let contactForm = $(".contact-form");
@@ -96,9 +97,9 @@ $(document).ready(function () {
             success: function (data) {
                 let submitSpan = thisForm.find(".submit-span")
                 if (data.added) {
-                    submitSpan.html("In cart<button type='submit' class='btn btn-link'>Remove ?</button>")
+                    submitSpan.html("<span>In cart<button type='submit' class='btn btn-link' style='box-shadow: none;'>Remove ?</button></span>")
                 } else {
-                    submitSpan.html("<button type='submit' class='btn btn-success'>Add to cart</button>")
+                    submitSpan.html("<p class='bottom-area d-flex px-3'><button type='submit' class='btn add-to-cart text-center py-2 mr-1' style='background-color: black; color: #ffffff;'><span>Add to cart <i class='ion-ios-add ml-1'></i></span></button><button type='submit' class='btn buy-now text-center py-2' style='background-color: #ffa45c; color: #ffffff;'>Buy now<span><i class='ion-ios-cart ml-1'></i></span></button></p>")
                 }
                 let navbarCount = $(".navbar-cart-count")
                 navbarCount.text("[" + data.cartItemCount + "]")
@@ -106,6 +107,8 @@ $(document).ready(function () {
                 if (currentPath.indexOf("cart") != -1) {
                     updateCart()
                 }
+
+                  
             },
             error: function (errorData) {
                 window.alert('An error occured.')
@@ -113,7 +116,45 @@ $(document).ready(function () {
         })
     })
 
+
+
     function updateCart() {
+        // let cartTable = $(".cart-table")
+        // let cartBody = cartTable.find(".cart-body")
+        // let productRows = cartBody.find(".cart-product")
+        // let currentUrl = window.location.href
+
+        // let updateCartUrl = '/api/cart/';
+        // let updateCartMethod = "GET";
+        // let data = {}
+        // $.ajax({
+        //     url: updateCartUrl,
+        //     method: updateCartMethod,
+        //     data: data,
+        //     success: function (data) {
+        //         console.log(data);
+        //         let hiddenCartItemRemoveForm = $(".cart-item-remove-form");
+        //         if (data.products.length > 0) {
+        //             productRows.html(" ")
+        //             i = data.products.length;
+        //             $.each(data.products, function (index, value) {
+        //                 let newCartItemRemoveForm = hiddenCartItemRemoveForm.clone();
+        //                 newCartItemRemoveForm.css("display", "block");
+        //                 newCartItemRemoveForm.find(".cart-item-product-id").val(value.id);
+        //                 cartBody.prepend("<tr class='text-center cart-product'><td class='product-remove'>"+newCartItemRemoveForm.html()+"</td><td class='image-prod'><div class='img' style='background-image:url("+value.image_url+"'></div></td><td class='product-name'><h3>"+value.name+"</h3></td><td class='price'>" + value.price + "</td><tr>")
+        //                 i--
+        //             })
+        //             document.getElementsByClassName("cart-subtotal")[0].innerHTML = "$"+data.subtotal
+        //             document.getElementsByClassName("cart-total-2")[0].innerHTML = "$"+data.total
+        //         } else {
+        //             window.location.href = currentUrl
+        //         }
+        //     },
+        //     error: function (errorData) {
+        //         window.alert('An error occured.')
+        //     }
+        // })
+
         let cartTable = $(".cart-table")
         let cartBody = cartTable.find(".cart-body")
         let productRows = cartBody.find(".cart-product")
@@ -127,7 +168,7 @@ $(document).ready(function () {
             method: updateCartMethod,
             data: data,
             success: function (data) {
-                let hiddenCartItemRemoveForm = $(".cart-item-remove-form");
+                let hiddenCartItemRemoveForm = $(".cart-item-remove-form")
                 if (data.products.length > 0) {
                     productRows.html(" ")
                     i = data.products.length;
@@ -135,17 +176,21 @@ $(document).ready(function () {
                         let newCartItemRemoveForm = hiddenCartItemRemoveForm.clone();
                         newCartItemRemoveForm.css("display", "block");
                         newCartItemRemoveForm.find(".cart-item-product-id").val(value.id);
-                        cartBody.prepend("<tr class='text-center cart-product'><td class='product-remove'>"+newCartItemRemoveForm.html()+"</td><td class='image-prod'><div class='img' style='background-image:url("+value.image_url+"'></div></td><td class='product-name'><h3>"+value.name+"</h3></td><td class='price'>" + value.price + "</td><tr>")
+                        cartBody.prepend("<tr class='text-center cart-product'><td class='product-name'>" + i + "</td><td class='image-prod'><div class='img' style='background-image:url(" + value.image_url + ")'></div></td><td class='product-name'><h3>" + value.name + "</h3>" + newCartItemRemoveForm.html() + "</td><td class='price'>" + value.price + "</td><tr>")
                         i--
                     })
-                    document.getElementsByClassName("cart-subtotal")[0].innerHTML = "$"+data.subtotal
-                    document.getElementsByClassName("cart-total-2")[0].innerHTML = "$"+data.total
+                    document.getElementsByClassName("cart-subtotal")[0].innerHTML = "$" + data.subtotal
+                    document.getElementsByClassName("cart-total-2")[0].innerHTML = "$" + data.total
                 } else {
                     window.location.href = currentUrl
                 }
             },
             error: function (errorData) {
-                window.alert('An error occured.')
+                $.alert({
+                    title: "Oops!",
+                    content: "An error occured.",
+                    theme: "modern"
+                });
             }
         })
     }

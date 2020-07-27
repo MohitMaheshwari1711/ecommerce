@@ -1,0 +1,20 @@
+<form method="POST" id="random" action='{% url "cart:update" %}' data-endpoint='{% url "cart:update" %}'
+    class="form form-product-ajax"> {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ product.id }}" />
+    <div class="submit-span">
+        {% if product in cart.products.all %}
+        <span>
+            In cart<button type="submit" class="btn btn-link" style='box-shadow: none;'>Remove ?</button>
+        </span>
+        {% else %}
+        <p class='bottom-area d-flex px-3'>
+            <button type='submit' class='btn add-to-cart text-center py-2 mr-1'
+                style='background-color: black; color: #ffffff;'><span>Add to cart <i
+                        class='ion-ios-add ml-1'></i></span></button>
+            <button type='submit' class='btn buy-now text-center py-2'
+                style='background-color: #ffa45c; color: #ffffff;'>Buy now<span><i
+                        class='ion-ios-cart ml-1'></i></span></button>
+        </p>
+        {% endif %}
+    </div>
+</form>

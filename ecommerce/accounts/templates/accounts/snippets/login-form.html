@@ -5,20 +5,23 @@
     {% endif %}
     <h3 class="mb-4 billing-heading">Login</h3>
     <div class="row align-items-end">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="email">Email</label>
                 {{form.email}}
             </div>
         </div>
-        <div class="w-100"></div>
-        <div class="col-md-12">
+   
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="password">Password</label>
                 {{ form.password }}
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-7" style="padding-left: 52px;">
             <p><a href="javascript:$('#login_data').submit();" class="btn btn-primary py-3 px-5">Login</a></p>
         </div>
     </div>

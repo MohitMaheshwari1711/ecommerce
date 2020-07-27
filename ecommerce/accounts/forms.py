@@ -66,12 +66,27 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(
+        attrs={
+            "class": "form-control"
+        })
+    )
+    password2 = forms.CharField(label='Password confirmation',widget=forms.PasswordInput(
+        attrs={
+            "class": "form-control"
+        })
+    )
 
     class Meta:
         model = User
         fields = ('full_name', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+        })
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -87,6 +102,7 @@ class RegisterForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
 
 
 

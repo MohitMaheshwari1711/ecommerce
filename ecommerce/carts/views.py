@@ -5,7 +5,7 @@ from addresses.forms import AddressForm
 from addresses.models import Address
 from billing.models import BillingProfile
 from accounts.models import GuestEmail
-from accounts.forms import LoginForm, GuestForm
+from accounts.forms import LoginForm, GuestForm, RegisterForm
 from orders.models import Order
 from products.models import Product
 from .models import Cart
@@ -21,7 +21,6 @@ def cart_detail_api_view(request):
         "image_url": x.image.url
         } for x in cart_obj.products.all()]
     cart_data = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
-    print(cart_data)
     return JsonResponse(cart_data)
 
 
@@ -66,6 +65,7 @@ def checkout_home(request):
 
     login_form = LoginForm()
     guest_form = GuestForm()
+    register_form = RegisterForm()
     address_form = AddressForm()
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
@@ -100,6 +100,7 @@ def checkout_home(request):
         "billing_profile": billing_profile,
         "login_form": login_form,
         "guest_form": guest_form,
+        "register_form": register_form,
         "address_form": address_form,
         "address_qs": address_qs
     }

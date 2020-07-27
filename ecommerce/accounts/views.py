@@ -57,10 +57,11 @@ class LoginView(FormView):
 
 
 
-class RegisterView(CreateView):
-    form_class = RegisterForm
-    template_name = 'accounts/register.html'
-    success_url = '/login/'
+# class RegisterView(CreateView):
+#     form_class = RegisterForm
+#     template_name = 'accounts/register.html'
+#     success_url = '/login/'
+
 
     
 
@@ -95,11 +96,27 @@ class RegisterView(CreateView):
 
 # User = get_user_model()
 
-# def register_page(request):
-#     form = RegisterForm(request.POST or None)
-#     context = {
-#         "form": form
-#     }
-#     if form.is_valid():
-#         form.save()
-#     return render(request, "accounts/register.html", context)
+def register_page(request):
+    form = RegisterForm(request.POST or None)
+    context = {
+        "form": form
+    }
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post or None
+    if form.is_valid():
+        email = form.instance.email
+        password = form.cleaned_data["password1"]
+        form.save()
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            try:
+                del request.session['guest_email_id']
+            except:
+                pass
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
+            else:
+                return redirect("/")
+    return render(request, "accounts/register.html", context)

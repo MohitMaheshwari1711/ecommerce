@@ -1,0 +1,39 @@
+<form method="POST" id="register_data" action='{% if action_url %}{{ action_url }}{% else %}{% url "register" %}{% endif %}'
+    class="billing-form"> {% csrf_token %}
+    {% if next_url %}
+    <input type="hidden" name="next" value='{{ next_url }}' />
+    {% endif %}
+    <h3 class="mb-4 billing-heading">Register User</h3>
+    <div class="row align-items-end">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">Full Name</label>
+                {{form.full_name}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{form.email}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">Password</label>
+                {{form.password1}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">Password Confirmation</label>
+                {{form.password2}}
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-7" style="padding-left: 52px;">
+            <p><a href="javascript:$('#register_data').submit();" class="btn btn-primary py-3 px-5">Submit</a></p>
+        </div>
+    </div>
+</form>

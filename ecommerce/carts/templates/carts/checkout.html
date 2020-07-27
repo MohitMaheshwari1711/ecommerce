@@ -3,50 +3,142 @@
 
 {% block content %}
 
+
 <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg' %});">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <h1 class="mb-0 bread">Checkout</h1>
+                <h1 class="mb-0 bread">My Cart</h1>
             </div>
         </div>
     </div>
 </div>
 
-<section class="ftco-section pt-5">
+
+<section class="ftco-section" style="padding-top: 50px;">
     <div class="container">
         <div class="row justify-content-center">
-            {% if not billing_profile %}
-            <div class="col-xl-6">
-                <div class="col-xl-12 ftco-animate">
-                    <div class="radio login-method">
-                        <label class="mr-3"><input class="login-radio" type="radio" name="optradio" checked> Login
-                        </label>
-                        <label><input class="guest-radio" type="radio" name="optradio"> Continue as guest</label>
-                    </div>
+            <div class="col-xl-8 ftco-animate">
+                {% if not billing_profile %}
+                <div class="row radio justify-content-center">
+                    <label class="mr-4">
+                        <input type="radio" name="user" class="checking-1" checked> Login
+                    </label>
+                    <label>
+                        <input type="radio" name="user" class="checking-2"> Create an Account?
+                    </label>
                 </div>
-                <div class="col-xl-12 ftco-animate mt-4 form-1">
+                <div class="form-1">
                     {% include 'accounts/snippets/login-form.html' with form=login_form next_url=request.build_absolute_uri %}
                 </div>
-                <div class="col-xl-12 ftco-animate mt-4 form-2" style="display: none;">
-                    {% url "guest_register" as guest_register_url %}
-                    {% include 'accounts/snippets/guest-form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+                <div class="form-2" style="display: none;">
+                    {% include 'accounts/snippets/register-form.html' with form=register_form next_url=request.build_absolute_uri %}
                 </div>
-            </div>
-            {% else %}
-            {% if not object.shipping_address %}
-            <div class="col-xl-8 ftco-animate">
-                {% url "checkout_address_create" as checkout_address_create %}
-                {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='shipping' %}
-            </div>
-            <div class="col-xl-8 ftco-animate">
-                <div>
-                    {% url 'checkout_address_reuse' as checkout_address_reuse %}
-                    {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='shipping' action_url=checkout_address_reuse %}
+                {% else %}
+                {% if not object.shipping_address %}
+                <div class="row">
+                    <div class="col-12">
+                        <b class="lead">Shipping Address</b>
+                        <hr />
+                    </div>
+                    <div class="col-12">
+                        {% url "checkout_address_create" as checkout_address_create %}
+                        {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='shipping' %}
+
+                    </div>
+                    <div class="col-12">
+                        {% url 'checkout_address_reuse' as checkout_address_reuse %}
+                        {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='shipping' action_url=checkout_address_reuse %}
+                    </div>
                 </div>
+                {% elif not object.billing_address %}
+                <div class="row">
+                    <div class="col-12">
+                        <p class="lead">Billing Address</p>
+                        <hr />
+                    </div>
+                    <div class="col-12">
+                        {% url "checkout_address_create" as checkout_address_create %}
+                        {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='billing' %}
+                    </div>
+                    <div class="col-12">
+                        {% url 'checkout_address_reuse' as checkout_address_reuse %}
+                        {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri address_type='billing' action_url=checkout_address_reuse %}
+                    </div>
+                </div>
+                {% else %}
+
+
+                <div class="row mt-5 pt-3 d-flex">
+                    <div class="col-md-7 d-flex">
+                        <div class="cart-detail cart-total bg-light p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Cart Total</h3>
+                            <p class="d-flex">
+                                <span style="width: 40%;">Cart Items</span>
+                                <span style="width: 60%;">
+                                    {% for product in object.cart.products.all %}{{ product }} X 1<br />
+                                    {% endfor %}
+                                </span>
+                            </p>
+                            <p class="d-flex">
+                                <span style="width: 40%;">Cart Total</span>
+                                <span style="width: 60%;">${{ object.cart.total }}</span>
+                            </p>
+                            <p class="d-flex">
+                                <span style="width: 40%;">Shipping Total</span>
+                                <span style="width: 60%;">${{object.shipping_total}}</span>
+                            </p>
+                            <hr>
+                            <p class="d-flex total-price">
+                                <span style="width: 40%;">Total</span>
+                                <span style="width: 60%;">${{object.total}}</span>
+                            </p>
+                            <form id="confirm-order" class="form" method="POST" action="">{% csrf_token %}
+                                <p><a href="javascript:$('#confirm-order').submit();" class="btn btn-primary py-3 px-4">Place an order</a></p>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 d-flex">
+                        <div class="cart-detail cart-total bg-light p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Addresses</h3>
+                            <div class="lead"><b>Shipping Address</b></div>
+                            <div style="margin-top: 5px;">{{ object.shipping_address.get_address }}</div>
+                            <div class="lead mt-5"><b>Billing Address</b></div>
+                            <div style="margin-top: 5px;">{{ object.shipping_address.get_address }}</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                {% endif %}
+
+                {% endif %}
             </div>
-            {% endif %}
         </div>
+    </div>
 </section>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 ftco-animate">
+
+            </div>
+        </div>
+    </div>
+</section>

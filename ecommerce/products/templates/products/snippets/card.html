@@ -22,9 +22,7 @@
                     </p>
                 </div>
             </div>
-            <p class="bottom-area d-flex px-3">
-                {% include 'products/snippets/update-cart.html' with product=instance cart=cart %}
-            </p>
+            {% include 'products/snippets/add-remove-button.html' with product=instance cart=cart %}
         </div>
     </div>
 </div>

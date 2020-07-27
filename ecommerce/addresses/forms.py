@@ -14,11 +14,14 @@ class AddressForm(forms.ModelForm):
             'state',
             'postal_code'
         ]
-        widgets = {
-            'address_line_1': forms.TextInput(attrs={'class':'form-control'}),
-            'address_line_2': forms.TextInput(attrs={'class':'form-control'}),
-            'city': forms.TextInput(attrs={'class':'form-control'}),
-            'country': forms.TextInput(attrs={'class':'form-control', 'disabled':True}),
-            'state': forms.TextInput(attrs={'class':'form-control'}),
-            'postal_code': forms.TextInput(attrs={'class':'form-control'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['country'].widget.attrs.update({
+            'disabled': True
+        })
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+        })
+
