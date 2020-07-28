@@ -3,16 +3,21 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 
 from .forms import ContactForm
+from products.models import Product
 
 
 def home_page(request):
+    queryset = Product.objects.all()
     context = {
         "title": "Home Page !!!",
-        "content": "Welcome to home page"
+        "content": "Welcome to home page",
+        'home_object_list': queryset
     }
     if request.user.is_authenticated():
         context["premium_content"] = "Available"
     return render(request, "home_page.html", context)
+
+
 
 
 def about_page(request):

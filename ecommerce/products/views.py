@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404
 
@@ -36,6 +36,8 @@ class ProductListView(ListView):
         return Product.objects.all()
 
 
+
+
 def product_list_view(request):
     queryset = Product.objects.all()
     context = {
@@ -70,6 +72,21 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
 
         # object_viewed_signal.send(instance.__class__, instance=instance, request=request)
         return instance
+
+
+class ProductListFilteredView(ListView):
+    template_name = "products/list.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductListFilteredView, self).get_context_data(*args, **kwargs)
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart_obj
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        print(self.kwargs.get('value'))
+        request = self.request
+        return Product.objects.all().filter(categories=self.kwargs.get('value'))
 
 
 class ProductDetailView(ObjectViewedMixin, DetailView):

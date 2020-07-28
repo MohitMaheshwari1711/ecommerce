@@ -6,6 +6,30 @@ from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from ecommerce.utils import unique_slug_generator
 
+CATEGORIES = (
+    ('t_shirts', 'T-Shirts'),
+    ('tops', 'Tops'),
+    ('casual_shirts', 'Casual Shirts'),
+    ('formal_shirts', 'Formal Shirts'),
+    ('sweatshirts', 'Sweatshirts'),
+    ('jackets', 'Jackets'),
+    ('blazzers_coats', 'Blazzers & Coats'),
+    ('suits', 'Suits'),
+    ('skirts', 'Skirts & Palazzos'),
+    ('jeans', 'Jeans'),
+    ('casual_trousers', 'Casual Trousers'),
+    ('formal_trousers', 'Formal Trousers'),
+    ('shorts', 'Shorts'),
+    ('trackpants_joggers', 'Trackpants & Joggers'),
+    ('jeggings', 'Jeggings'),
+    ('capris', 'Capris'),
+    ('casual_shoes', 'Casual Shoes'),
+    ('formal_shoes', 'Formal Shoes'),
+    ('sports_shoes', 'Sports Shoes'),
+    ('sneakers', 'Sneakers'),
+    ('slippers_sandals', 'Slippers & Sandals'),
+    ('heels', 'Heels')
+)
 
 
 def get_filename_ext(filepath):
@@ -15,8 +39,6 @@ def get_filename_ext(filepath):
 
 
 def upload_image_path(instance, filename):
-    print(instance)
-    print(filename)
     new_filename = random.randint(1, 39102593125848589)
     name, ext = get_filename_ext(filename)
     final_filename = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
@@ -54,6 +76,7 @@ class Product(models.Model):
     title = models.CharField(max_length=120)
     slug = models.SlugField(blank=True, unique=True)
     description = models.TextField()
+    categories = models.CharField(max_length=120, choices=CATEGORIES, default='t_shirts')
     price = models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
     image =  models.ImageField(upload_to=upload_image_path, null=True, blank=True)
     featured = models.BooleanField(default=False)

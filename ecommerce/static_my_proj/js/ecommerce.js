@@ -80,7 +80,6 @@ $(document).ready(function () {
         window.location.href = '/search/?q=' + query;
     }
 
-
     let productForm = $(".form-product-ajax")
     productForm.submit(function (event) {
         event.preventDefault();
@@ -99,7 +98,7 @@ $(document).ready(function () {
                 if (data.added) {
                     submitSpan.html("<span>In cart<button type='submit' class='btn btn-link' style='box-shadow: none;'>Remove ?</button></span>")
                 } else {
-                    submitSpan.html("<p class='bottom-area d-flex px-3'><button type='submit' class='btn add-to-cart text-center py-2 mr-1' style='background-color: black; color: #ffffff;'><span>Add to cart <i class='ion-ios-add ml-1'></i></span></button><button type='submit' class='btn buy-now text-center py-2' style='background-color: #ffa45c; color: #ffffff;'>Buy now<span><i class='ion-ios-cart ml-1'></i></span></button></p>")
+                    submitSpan.html("<p class='bottom-area d-flex px-3'><button type='submit' class='btn add-to-cart text-center py-2 mr-1' style='background-color: black; color: #ffffff;'><span>Add to cart <i class='ion-ios-add ml-1'></i></span></button><button type='submit' class='btn buy-now text-center py-2' onclick='lets_go()' style='background-color: #ffa45c; color: #ffffff;'>Buy now<span><i class='ion-ios-cart ml-1'></i></span></button></p>")
                 }
                 let navbarCount = $(".navbar-cart-count")
                 navbarCount.text("[" + data.cartItemCount + "]")
@@ -108,7 +107,7 @@ $(document).ready(function () {
                     updateCart()
                 }
 
-                  
+
             },
             error: function (errorData) {
                 window.alert('An error occured.')
@@ -117,44 +116,56 @@ $(document).ready(function () {
     })
 
 
+    // window.addEventListener('click', function (event) {
+    //     if (event.target.className == 'shirts-1') {
+    //         sort_products_list()
+    //     }
+    // })
+
+    // function sort_products_list() {
+    //     $.ajax({
+    //         url: '/products/api/list',
+    //         method: 'GET',
+    //         data: {},
+    //         success: function (data) {
+    //             console.log(data);
+    //             $(".products-index").empty()
+    //             $.each(data.products, function (index, value) {
+    //                 if (value.name == 'Grey Frock Women') {
+    //                     $(".products-index").prepend(`
+    //                     <div class="col-sm-6 col-md-6 col-lg-4 ftco-animated">
+    //                         <div class="product">
+    //                             <a href="${value.url}" class="img-prod"><img class="img-fluid" src='${value.image_url}' alt="Colorlib Template">
+    //                                 <div class="overlay"></div>
+    //                             </a>
+    //                             <div class="text py-3 px-3">
+    //                                 <h3><a href="${value.url}">${value.name}</a></h3>
+    //                                 <div class="d-flex">
+    //                                     <div class="pricing">
+    //                                         <p class="price"><span class="price-sale">$${value.price}</span></p>
+    //                                     </div>
+    //                                     <div class="rating" onclick="random()">
+    //                                         <p class="text-right">
+    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
+    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
+    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
+    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
+    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
+    //                                         </p>
+    //                                     </div>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                     </div>`
+    //                 )}
+    //             })
+    //         }
+    //     })
+    // }
+
+    
 
     function updateCart() {
-        // let cartTable = $(".cart-table")
-        // let cartBody = cartTable.find(".cart-body")
-        // let productRows = cartBody.find(".cart-product")
-        // let currentUrl = window.location.href
-
-        // let updateCartUrl = '/api/cart/';
-        // let updateCartMethod = "GET";
-        // let data = {}
-        // $.ajax({
-        //     url: updateCartUrl,
-        //     method: updateCartMethod,
-        //     data: data,
-        //     success: function (data) {
-        //         console.log(data);
-        //         let hiddenCartItemRemoveForm = $(".cart-item-remove-form");
-        //         if (data.products.length > 0) {
-        //             productRows.html(" ")
-        //             i = data.products.length;
-        //             $.each(data.products, function (index, value) {
-        //                 let newCartItemRemoveForm = hiddenCartItemRemoveForm.clone();
-        //                 newCartItemRemoveForm.css("display", "block");
-        //                 newCartItemRemoveForm.find(".cart-item-product-id").val(value.id);
-        //                 cartBody.prepend("<tr class='text-center cart-product'><td class='product-remove'>"+newCartItemRemoveForm.html()+"</td><td class='image-prod'><div class='img' style='background-image:url("+value.image_url+"'></div></td><td class='product-name'><h3>"+value.name+"</h3></td><td class='price'>" + value.price + "</td><tr>")
-        //                 i--
-        //             })
-        //             document.getElementsByClassName("cart-subtotal")[0].innerHTML = "$"+data.subtotal
-        //             document.getElementsByClassName("cart-total-2")[0].innerHTML = "$"+data.total
-        //         } else {
-        //             window.location.href = currentUrl
-        //         }
-        //     },
-        //     error: function (errorData) {
-        //         window.alert('An error occured.')
-        //     }
-        // })
-
         let cartTable = $(".cart-table")
         let cartBody = cartTable.find(".cart-body")
         let productRows = cartBody.find(".cart-product")
@@ -195,3 +206,10 @@ $(document).ready(function () {
         })
     }
 })
+
+
+function lets_go() {
+    setTimeout(() => {
+        window.location.href = '/cart'
+    }, 500);
+}
