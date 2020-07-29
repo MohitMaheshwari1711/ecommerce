@@ -20,7 +20,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 
-from products.views import ProductListFilteredView
+from products.views import ProductListFilteredView, product_detail_api_view
 
 from accounts.views import LoginView, register_page, guest_register_view
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^register/guest/$', guest_register_view, name='guest_register'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^api/cart/$', cart_detail_api_view, name='api-cart'),
+    url(r'^api/related$', product_detail_api_view, name='related-products-list'),
     url(r'^products/', include("products.urls", namespace="products")),
     url(r'^list/(?P<value>\w+)/$', ProductListFilteredView.as_view(), name='filtered_list'),
     url(r'^search/', include("search.urls", namespace="search")),

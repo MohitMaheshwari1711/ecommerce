@@ -38,7 +38,7 @@
                                     <h3>{{ product.title }}</h3>
                                     {% include 'carts/snippets/remove-product.html' with product_id=product.id %}
                                 </td>
-                                <td class="price">${{ product.price }}</td>
+                                <td class="price">₹{{ product.price }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -55,16 +55,16 @@
                     <h3>Cart Totals</h3>
                     <p class="d-flex">
                         <span>Subtotal</span>
-                        <span class="cart-subtotal">${{ cart.subtotal }}</span>
+                        <span class="cart-subtotal">₹{{ cart.subtotal }}</span>
                     </p>
                     <p class="d-flex">
                         <span>Discount</span>
-                        <span>$0.00</span>
+                        <span>₹0.00</span>
                     </p>
                     <hr>
                     <p class="d-flex total-price">
                         <span>Total (tax included)</span>
-                        <span class="cart-total-2">${{ cart.total }}</span>
+                        <span class="cart-total-2">₹{{ cart.total }}</span>
                     </p>
                 </div>
                 <p class="text-center"><a href='{% url "cart:checkout" %}' class="btn btn-primary py-3 px-4">Proceed to Checkout</a>

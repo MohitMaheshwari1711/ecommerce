@@ -31,8 +31,9 @@
                     <h2 class="heading mb-4"><a href="#">Top Wear</a></h2>
                     <ul style="cursor: pointer;">
                         <li><a href="{% url 'filtered_list' value='t_shirts' %}">T-Shirts</a></li>
+                        <li><a href="{% url 'filtered_list' value='tops' %}">Tops</a></li>
                         <li><a href="{% url 'filtered_list' value='casual_shirts' %}">Casual Shirts</a></li>
-                        <li><a href="#">Formal Shirts</a></li>
+                        <li><a href="{% url 'filtered_list' value='formal_shirts' %}">Formal Shirts</a></li>
                         <li><a href="#">Sweatshirts</a></li>
                         <li><a href="#">Jackets</a></li>
                         <li><a href="#">Blazzers &amp; Coats</a></li>

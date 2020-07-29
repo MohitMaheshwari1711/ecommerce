@@ -116,54 +116,51 @@ $(document).ready(function () {
     })
 
 
-    // window.addEventListener('click', function (event) {
-    //     if (event.target.className == 'shirts-1') {
-    //         sort_products_list()
-    //     }
-    // })
+    if ($('#DivID').length) {
+        console.log('Found with Length');
+        trial()
+    }
 
-    // function sort_products_list() {
-    //     $.ajax({
-    //         url: '/products/api/list',
-    //         method: 'GET',
-    //         data: {},
-    //         success: function (data) {
-    //             console.log(data);
-    //             $(".products-index").empty()
-    //             $.each(data.products, function (index, value) {
-    //                 if (value.name == 'Grey Frock Women') {
-    //                     $(".products-index").prepend(`
-    //                     <div class="col-sm-6 col-md-6 col-lg-4 ftco-animated">
-    //                         <div class="product">
-    //                             <a href="${value.url}" class="img-prod"><img class="img-fluid" src='${value.image_url}' alt="Colorlib Template">
-    //                                 <div class="overlay"></div>
-    //                             </a>
-    //                             <div class="text py-3 px-3">
-    //                                 <h3><a href="${value.url}">${value.name}</a></h3>
-    //                                 <div class="d-flex">
-    //                                     <div class="pricing">
-    //                                         <p class="price"><span class="price-sale">$${value.price}</span></p>
-    //                                     </div>
-    //                                     <div class="rating" onclick="random()">
-    //                                         <p class="text-right">
-    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
-    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
-    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
-    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
-    //                                             <a href="#"><span class="ion-ios-star-outline"></span></a>
-    //                                         </p>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </div>`
-    //                 )}
-    //             })
-    //         }
-    //     })
-    // }
+    function trial() {
+        $.ajax({
+            url: `/api/related`,
+            method: 'GET',
+            data: {},
+            success: function (data) {
+                $.each(data.products, function (index, value) {
+                    $("#related-products").prepend(
+                        `<div class="col-sm-4 col-md-4 col-lg-4 ftco-animated">
+                        <div class="product">
+                            <a href='${value.url}' class="img-prod"><img class="img-fluid" src='${value.image_url}'
+                                alt="Colorlib Template">
+                                <div class="overlay"></div>
+                            </a>
+                            <div class="text py-3 px-3 text-center">
+                                <h3><a href='${value.url}'>${value.name}</a></h3>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price"><span class="price-sale">₹${value.price}</span></p>
+                                    </div>
+                                    <div class="rating">
+                                        <p class="text-right">
+                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+                    )
+                })
+            }
+        })
+    }
 
-    
+
 
     function updateCart() {
         let cartTable = $(".cart-table")
@@ -213,3 +210,6 @@ function lets_go() {
         window.location.href = '/cart'
     }, 500);
 }
+
+
+

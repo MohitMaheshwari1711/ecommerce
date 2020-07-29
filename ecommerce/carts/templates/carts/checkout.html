@@ -82,16 +82,16 @@
                             </p>
                             <p class="d-flex">
                                 <span style="width: 40%;">Cart Total</span>
-                                <span style="width: 60%;">${{ object.cart.total }}</span>
+                                <span style="width: 60%;">₹{{ object.cart.total }}</span>
                             </p>
                             <p class="d-flex">
                                 <span style="width: 40%;">Shipping Total</span>
-                                <span style="width: 60%;">${{object.shipping_total}}</span>
+                                <span style="width: 60%;">₹{{object.shipping_total}}</span>
                             </p>
                             <hr>
                             <p class="d-flex total-price">
                                 <span style="width: 40%;">Total</span>
-                                <span style="width: 60%;">${{object.total}}</span>
+                                <span style="width: 60%;">₹{{object.total}}</span>
                             </p>
                             <form id="confirm-order" class="form" method="POST" action="">{% csrf_token %}
                                 <p><a href="javascript:$('#confirm-order').submit();" class="btn btn-primary py-3 px-4">Place an order</a></p>

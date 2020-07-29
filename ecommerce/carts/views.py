@@ -23,6 +23,11 @@ def cart_detail_api_view(request):
     cart_data = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
     return JsonResponse(cart_data)
 
+def cart_products_id(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    products = [x.id for x in cart_obj.products.all()]
+    return products
+
 
 
 def cart_home(request):
@@ -36,7 +41,6 @@ def cart_update(request):
         try:
             product_obj = Product.objects.get(id=product_id)
         except:
-            print("Show message to user, product is gone")
             return redirect("cart:home")
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
@@ -47,7 +51,6 @@ def cart_update(request):
             added = True
         request.session['cart_items'] = cart_obj.products.count()
         if request.is_ajax():
-            print("Ajax request")
             json_data = {
                 "added": added,
                 "removed": not added,
