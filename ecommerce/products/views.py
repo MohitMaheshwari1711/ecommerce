@@ -77,7 +77,6 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
             product_id = instance.id
         except:
             raise Http404("Hmmm...")
-        # object_viewed_signal.send(instance.__class__, instance=instance, request=request)
         return instance
 
 

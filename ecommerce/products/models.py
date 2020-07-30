@@ -86,8 +86,23 @@ class Product(models.Model):
     objects = ProductManager()
 
     def get_absolute_url(self):
-        # return "/products/{slug}".format(slug=self.slug)
         return reverse("products:detail", kwargs={"slug": self.slug})
+    
+    def split_text(self):
+        detail = self.description.split(';')
+        product_detail = {
+            'key_1': detail[0],
+            'key_2': detail[1],
+            'key_3': detail[2],
+            'key_4': detail[3],
+            'key_5': detail[4],
+            'key_6': detail[5],
+            'key_7': detail[6],
+            'key_8': detail[7],
+            'key_9': detail[8],
+            'key_10': detail[9],
+        }
+        return product_detail
 
     def __str__(self):
         return self.title

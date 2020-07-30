@@ -42,8 +42,7 @@
                     </p>
                 </div>
                 <p class="price"><span>₹{{object.price}}</span></p>
-                <p>{{ object.description|linebreaks }}</p>
-                <div class="row mt-4">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group d-flex">
                             <div class="select-wrap">
@@ -57,7 +56,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-100"></div>
                     <div class="input-group col-md-6 d-flex mb-3">
                         <span class="input-group-btn mr-2">
                             <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
@@ -72,10 +70,94 @@
                             </button>
                         </span>
                     </div>
-                    <div class="w-100"></div>
-                    <div class="col-md-12">
-                        <p style="color: #000;">80 piece available</p>
+                </div>
+
+                <div id="descriptive">
+                    <p id="product-details-p"><span id="product-details-span"><b>PRODUCT DETAILS</b></span></p>
+                    <span id="product-description-color" class="text-1">{{object.split_text.key_1}}</span>
+
+                    <p id="product-details-p"><span id="product-details-span"><b>Size & Fit</b></span></p>
+                    <span id="product-description-color">{{object.split_text.key_2}}</span>
+
+                    <p id="product-details-p"><span id="product-details-span"><b>Material & Care</b></span></p>
+                    <span id="product-description-color">{{object.split_text.key_3}}<br />{{object.split_text.key_4}}</span>
+
+                    <p id="product-details-p"><span id="product-details-span"><b>Specifications</b></span></p>
+                    <div class="row">
+                        {% if object.categories == 'tops' %}
+                        <div class="col-6">
+                            <span><b>Sleeve Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Sleeve Styling</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Neck</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Print or Pattern Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Surface Styling</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 't_shirts' %}
+                        <div class="col-6">
+                            <span><b>Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Occasion</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Neck</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Main Trend</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'casual_trousers' %}
+                        <div class="col-6">
+                            <span><b>Weave Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Waist Rise</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Type of Pleat</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% endif %}
                     </div>
+                </div>
+                <div class="row mt-4">
+
                 </div>
                 <div>
                     {% include 'products/snippets/update-cart.html' with product=object cart=cart %}

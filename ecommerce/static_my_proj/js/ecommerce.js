@@ -129,7 +129,7 @@ $(document).ready(function () {
             success: function (data) {
                 $.each(data.products, function (index, value) {
                     $("#related-products").prepend(
-                        `<div class="col-sm-4 col-md-4 col-lg-4 ftco-animated">
+                        `<div class="col-sm-3 col-md-3 col-lg-3 ftco-animated">
                         <div class="product">
                             <a href='${value.url}' class="img-prod"><img class="img-fluid" src='${value.image_url}'
                                 alt="Colorlib Template">
