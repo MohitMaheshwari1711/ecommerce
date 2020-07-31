@@ -123,10 +123,171 @@
                             <span><b>Fit</b></span>
                             <p id="product-description-color">{{object.split_text.key_8}}</p>
                             <hr>
-                            <span><b>Neck</b></span>
+                            <span><b>Main Trend</b></span>
                             <p id="product-description-color">{{object.split_text.key_9}}</p>
                             <hr>
-                            <span><b>Main Trend</b></span>
+                            <span><b>Neck</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'casual_shirts' or object.categories == 'formal_shirts' %}
+                        <div class="col-6">
+                            <span><b>Sleeve Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Occasion</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Collar</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Placket</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'sweatshirts' %}
+                        <div class="col-6">
+                            <span><b>Sleeve Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Pattern</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Neck</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Print or Pattern Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'jackets' %}
+                        <div class="col-6">
+                            <span><b>Sleeve Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Collar</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Print or Pattern Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'blazzers_coats' %}
+                        <div class="col-6">
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Front Styling</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Lining Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'suits' %}
+                        <div class="col-6">
+                            <span><b>Collar</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Bottom Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Sleeve Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Front Styling</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'skirts' %}
+                        <div class="col-6">
+                            <span><b>Occasion</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Pattern</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Waistband</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'jeans' %}
+                        <div class="col-6">
+                            <span><b>Distress</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Fade</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Waist Rise</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Stretch</b></span>
                             <p id="product-description-color">{{object.split_text.key_10}}</p>
                             <hr>
                         </div>
@@ -150,6 +311,121 @@
                             <p id="product-description-color">{{object.split_text.key_9}}</p>
                             <hr>
                             <span><b>Type of Pleat</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'formal_trousers' %}
+                        <div class="col-6">
+                            <span><b>Waist Rise</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Weave Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Type of Pleat</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Fly Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'shorts' %}
+                        <div class="col-6">
+                            <span><b>Waist Rise</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Print or Pattern Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'trackpants_joggers' %}
+                        <div class="col-6">
+                            <span><b>Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Length</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Occasion</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Wash Care</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'jeggings' %}
+                        <div class="col-6">
+                            <span><b>Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Pattern</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fabric 2</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Type</b></span>
+                            <p id="product-description-color">{{object.split_text.key_10}}</p>
+                            <hr>
+                        </div>
+                        {% elif object.categories == 'capris' %}
+                        <div class="col-6">
+                            <span><b>Fabric</b></span>
+                            <p id="product-description-color">{{object.split_text.key_5}}</p>
+                            <hr>
+                            <span><b>Waist Rise</b></span>
+                            <p id="product-description-color">{{object.split_text.key_6}}</p>
+                            <hr>
+                            <span><b>Closure</b></span>
+                            <p id="product-description-color">{{object.split_text.key_7}}</p>
+                            <hr>
+                        </div>
+                        <div class="col-6">
+                            <span><b>Fit</b></span>
+                            <p id="product-description-color">{{object.split_text.key_8}}</p>
+                            <hr>
+                            <span><b>Pattern</b></span>
+                            <p id="product-description-color">{{object.split_text.key_9}}</p>
+                            <hr>
+                            <span><b>Wash Care</b></span>
                             <p id="product-description-color">{{object.split_text.key_10}}</p>
                             <hr>
                         </div>
