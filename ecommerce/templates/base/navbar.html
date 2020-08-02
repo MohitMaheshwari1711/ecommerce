@@ -5,6 +5,7 @@
 {% url 'logout' as logout_url %}
 {% url 'register' as register_url %}
 {% url 'cart:home' as cart_url %}
+{% url 'wishlist_views' as wishlist_url %}
 
 
 
@@ -26,6 +27,8 @@
         <li class="nav-item {% if request.path == contact_url %}active{% endif %}"><a href="{{ contact_url }}"
             class="nav-link">Contact</a></li>
         {% if request.user.is_authenticated %}
+        <li class="nav-item {% if request.path == wishlist_url %}active{% endif %}"><a href="{{ wishlist_url }}"
+          class="nav-link">Wishlist</a></li>
         <li class="nav-item {% if request.path == logout_url %}active{% endif %}"><a href="{{ logout_url }}"
             class="nav-link">Logout</a></li>
         {% else %}

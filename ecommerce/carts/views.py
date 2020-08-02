@@ -33,16 +33,8 @@ def cart_products_id(request):
 
 
 def cart_home(request):
-    # cart_obj = None
-    # if request.user.is_authenticated():
-    #     cart_obj, new_obj = Order.objects.check_existing_cart_id(request)
-    #     if not cart_obj:
-    #         cart_obj, new_obj = Cart.objects.new_or_get(request)
-    # else:
-    #     cart_obj, new_obj = Cart.objects.new_or_get(request)
-    # 
-    # print(cart_obj)
     cart_obj, new_obj = Cart.objects.new_or_get(request)
+    request.session['cart_items'] = cart_obj.products.count()
     return render(request, "carts/home.html", {"cart": cart_obj})
 
 

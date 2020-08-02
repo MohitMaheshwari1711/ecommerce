@@ -1,4 +1,42 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+
+
+
 $(document).ready(function () {
+
+
+    //------------------------------------SECURITY RELATED------------------------------//
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    //------------------------------------SECURITY RELATED------------------------------//
+
+
 
     window.addEventListener("click", function (event) {
         if (event.target.className == 'login-radio') {
@@ -7,11 +45,9 @@ $(document).ready(function () {
         } else if (event.target.className == 'guest-radio') {
             $(".form-1").css("display", "none");
             $(".form-2").css("display", "block");
-        } 
-        // else if(event.target.id == 'add-wishlist') {
-        //     console.log('************************')
-        // }
+        }
     });
+
 
 
 
@@ -87,7 +123,6 @@ $(document).ready(function () {
     productForm.submit(function (event) {
         event.preventDefault();
         let thisForm = $(this)
-        // let actionEndpoint = thisForm.attr("action");
         let actionEndpoint = thisForm.attr("data-endpoint");
         let httpMethod = thisForm.attr("method");
         let formData = thisForm.serialize();
@@ -120,7 +155,6 @@ $(document).ready(function () {
 
 
     if ($('#DivID').length) {
-        console.log('Found with Length');
         trial()
     }
 
@@ -213,6 +247,60 @@ function lets_go() {
         window.location.href = '/cart'
     }, 500);
 }
+
+
+
+function opened(val) {
+    let formData = {
+        'csrfmiddlewaretoken': csrftoken,
+        'product_id': val
+    }
+    $.ajax({
+        url: '/api/wishlist/update/',
+        method: 'POST',
+        data: formData,
+        success: function (data) {
+            let navbarCount = $(".navbar-cart-count")
+            navbarCount.text("[" + data.count + "]")
+            $("#product-index").empty();
+            $.each(data.products, function (index, value) { 
+                $("#product-index").prepend(
+                    `<div class="col-sm-3 col-md-3 col-lg-3 ftco-animated">
+                    <div class="product">
+                        <a href='${value.url}' class="img-prod"><img class="img-fluid" src='${value.image_url}'
+                            alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 px-3 text-center">
+                            <h3><a href='${value.url}'>${value.name}</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span class="price-sale">₹${value.price}</span></p>
+                                </div>
+                                <div class="rating">
+                                    <p class="text-right">
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="submit-span">
+                                <p class='bottom-area d-flex px-3'>
+                                    <button onclick="opened(${value.id})" class='btn buy-now text-center py-2' style='background-color: #ffa45c; color: #ffffff; margin-left: auto; margin-right: auto;'>Move to Bag<span><i class='ion-ios-cart ml-1'></i></span></button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+                )
+            })    
+        }
+    })
+}
+
 
 
 

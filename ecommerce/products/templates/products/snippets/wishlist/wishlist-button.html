@@ -1,0 +1,11 @@
+<form method="POST" action='{% url "wishlist_update" %}' data-endpoint='{% url "wishlist_update" %}'
+    class="form wishlist-update"> {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ product.id }}" />
+    <div class="submit-span">
+        <p class='bottom-area d-flex px-3'>
+            <button type='submit' class='btn buy-now text-center py-2'
+                style='background-color: #ffa45c; color: #ffffff; margin-left: auto; margin-right: auto;'>Move to
+                Bag<span><i class='ion-ios-cart ml-1'></i></span></button>
+        </p>
+    </div>
+</form>

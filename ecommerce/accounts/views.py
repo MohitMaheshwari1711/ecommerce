@@ -6,6 +6,7 @@ from django.views.generic import CreateView, FormView
 
 from .models import GuestEmail
 from carts.models import Cart
+from wishlist.models import WishList
 from .forms import LoginForm, RegisterForm, GuestForm
 from .signals import user_logged_in
 
@@ -44,6 +45,9 @@ class LoginView(FormView):
         if user is not None:
             login(request, user)
             user_logged_in.send(user.__class__, instance=user, request=request)
+            wishlist_obj = WishList.objects.filter(user=request.user)
+            if not wishlist_obj.exists(): 
+                WishList.objects.new(user=request.user)
             try:
                 del request.session['guest_email_id']
             except:
