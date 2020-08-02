@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-
+from django.conf import settings
 from addresses.forms import AddressForm
 from addresses.models import Address
 from billing.models import BillingProfile
@@ -10,6 +10,8 @@ from orders.models import Order
 from products.models import Product
 from .models import Cart
 
+
+User_cart = settings.AUTH_USER_MODEL
 
 def cart_detail_api_view(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -31,6 +33,15 @@ def cart_products_id(request):
 
 
 def cart_home(request):
+    # cart_obj = None
+    # if request.user.is_authenticated():
+    #     cart_obj, new_obj = Order.objects.check_existing_cart_id(request)
+    #     if not cart_obj:
+    #         cart_obj, new_obj = Cart.objects.new_or_get(request)
+    # else:
+    #     cart_obj, new_obj = Cart.objects.new_or_get(request)
+    # 
+    # print(cart_obj)
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     return render(request, "carts/home.html", {"cart": cart_obj})
 
@@ -50,6 +61,13 @@ def cart_update(request):
             cart_obj.products.add(product_obj)
             added = True
         request.session['cart_items'] = cart_obj.products.count()
+        if request.user.is_authenticated:
+            billing_profile = BillingProfile.objects.filter(user=request.user)
+            if billing_profile.exists():
+                order_id = Order.objects.filter(billing_profile=billing_profile, status='created')
+                if not order_id.exists():
+                    order_obj = Order.objects.new_or_get(billing_profile[0], cart_obj)
+                
         if request.is_ajax():
             json_data = {
                 "added": added,
@@ -93,7 +111,7 @@ def checkout_home(request):
     if request.method == "POST":
         is_done = order_obj.check_done()
         if is_done:
-            order_obj.mark_paid()
+            order_obj.mark_paid(request)
             request.session['cart_items'] = 0
             del request.session['cart_id']
             return redirect("cart:success")

@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'products',
     'search',
     'tags',
-    'orders'
+    'orders',
+    'wishlist'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

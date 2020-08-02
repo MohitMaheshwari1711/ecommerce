@@ -16,12 +16,6 @@ class AddressForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['country'].widget.attrs.update({
-            'disabled': True
-        })
+        super(AddressForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-        })
-
+            self.fields[field].widget.attrs.update({'class': 'form-control'})

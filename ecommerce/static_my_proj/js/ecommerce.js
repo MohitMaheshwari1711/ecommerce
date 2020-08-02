@@ -7,7 +7,10 @@ $(document).ready(function () {
         } else if (event.target.className == 'guest-radio') {
             $(".form-1").css("display", "none");
             $(".form-2").css("display", "block");
-        }
+        } 
+        // else if(event.target.id == 'add-wishlist') {
+        //     console.log('************************')
+        // }
     });
 
 

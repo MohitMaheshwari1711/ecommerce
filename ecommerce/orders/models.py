@@ -5,7 +5,10 @@ from django.db.models.signals import pre_save, post_save
 from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
+from accounts.models import User
 from ecommerce.utils import unique_order_id_generator
+
+
 
 ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
@@ -16,8 +19,16 @@ ORDER_STATUS_CHOICES = (
 
 
 
-
 class OrderManager(models.Manager):
+    # def check_existing_cart_id(self, request):
+    #     billing_profile = BillingProfile.objects.filter(user=request.user)
+    #     if billing_profile.exists():
+    #         order_id = Order.objects.filter(billing_profile=billing_profile, status='created')
+    #         if order_id.count() == 1:
+    #             return order_id.first(), False
+    #         else:
+    #             return False
+
     def new_or_get(self, billing_profile, cart_obj):    
         created = False
         qs = Order.objects.filter(billing_profile=billing_profile, cart=cart_obj, active=True, status='created')
@@ -66,9 +77,10 @@ class Order(models.Model):
             return True
         return False
 
-    def mark_paid(self):
+    def mark_paid(self, request):
         if self.check_done():
             self.status = "paid"
+            Cart.objects.filter(user=request.user, active=True).update(active=False)
             self.save()
         return self.status
 

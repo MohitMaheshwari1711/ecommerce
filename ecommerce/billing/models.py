@@ -34,7 +34,7 @@ class BillingProfile(models.Model):
     objects = BillingProfileManager()
 
     def __str__(self):
-        return self.email
+        return str(self.user)
 
 
 # def billing_profile_created_receiver(sender, instance, created, *args, **kwargs):

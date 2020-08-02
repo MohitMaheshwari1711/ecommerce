@@ -8,9 +8,11 @@ from products.models import Product
 User = settings.AUTH_USER_MODEL
 
 class CartManager(models.Manager):
+
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
         qs = self.get_queryset().filter(id=cart_id)
+        print(qs)
         if qs.count() == 1:
             new_obj = False
             cart_obj = qs.first()
@@ -35,6 +37,7 @@ class Cart(models.Model):
     products = models.ManyToManyField(Product, blank=True)
     subtotal = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    active = models.BooleanField(default=True)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

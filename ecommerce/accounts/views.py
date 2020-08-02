@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.views.generic import CreateView, FormView
 
 from .models import GuestEmail
+from carts.models import Cart
 from .forms import LoginForm, RegisterForm, GuestForm
 from .signals import user_logged_in
 
@@ -50,6 +51,8 @@ class LoginView(FormView):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
+                request.session['cart_id'] = Cart.objects.get(user=request.user, active=True).id
+                request.session['cart_items'] = Cart.objects.get(user=request.user, active=True).products.count()
                 return redirect("/")
         return super(LoginView, self).form_invalid(form)
 
