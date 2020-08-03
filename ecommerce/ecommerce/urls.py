@@ -22,7 +22,7 @@ from django.contrib.auth.views import LogoutView
 
 from products.views import ProductListFilteredView, product_detail_api_view
 
-from wishlist.views import wish_list_update, get_wish_list
+from wishlist.views import wish_list_update, get_wish_list, wish_list_remove, add_remove_wishlist
 from accounts.views import LoginView, register_page, guest_register_view
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from carts.views import cart_detail_api_view
@@ -44,7 +44,9 @@ urlpatterns = [
     url(r'^search/', include("search.urls", namespace="search")),
     url(r'^cart/', include("carts.urls", namespace="cart")),
     url(r'^register/$', register_page, name='register'),
+    url(r'^api/wishlist/add-remove/$', add_remove_wishlist, name='add_remove_wishlist'),
     url(r'^api/wishlist/update/$', wish_list_update, name='wishlist_update'),
+    url(r'^api/wishlist/remove/$', wish_list_remove, name='wishlist_remove'),
     url(r'^wishlist/$', get_wish_list, name='wishlist_views'),
     url(r'^admin/', admin.site.urls),
 ]

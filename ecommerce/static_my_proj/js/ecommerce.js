@@ -135,8 +135,8 @@ $(document).ready(function () {
                 let submitSpan = thisForm.find(".submit-span")
                 if (data.added) {
                     submitSpan.html("<span>In cart<button type='submit' class='btn btn-link' style='box-shadow: none;'>Remove ?</button></span>")
-                } else {
-                    submitSpan.html("<p class='bottom-area d-flex px-3'><button type='submit' class='btn add-to-cart text-center py-2 mr-1' style='background-color: black; color: #ffffff;'><span>Add to cart <i class='ion-ios-add ml-1'></i></span></button><button type='submit' class='btn buy-now text-center py-2' onclick='lets_go()' style='background-color: #ffa45c; color: #ffffff;'>Buy now<span><i class='ion-ios-cart ml-1'></i></span></button></p>")
+                } else if (!data.added) {
+                    submitSpan.html("<p id='add-wishlist-"+data.product_id+"' class='d-flex ml-6' style='position: absolute; top: -364px;'><i onclick='update_wishlist(" + data.product_id + ")' class='ion-ios-heart ml-1' style='cursor:pointer;'></i></p><p class='bottom-area d-flex px-3'><button type='submit' class='btn add-to-cart text-center py-2 mr-1' style='background-color: black; color: #ffffff;'><span>Add to cart <i class='ion-ios-add ml-1'></i></span></button><button type='submit' class='btn buy-now text-center py-2' onclick='lets_go()' style='background-color: #ffa45c; color: #ffffff;'>Buy now<span><i class='ion-ios-cart ml-1'></i></span></button></p>")
                 }
                 let navbarCount = $(".navbar-cart-count")
                 navbarCount.text("[" + data.cartItemCount + "]")
@@ -250,7 +250,36 @@ function lets_go() {
 
 
 
-function opened(val) {
+function update_wishlist(val) {
+    let formData = {
+        'csrfmiddlewaretoken': csrftoken,
+        'product_id': val
+    }
+    $.ajax({
+        url: '/api/wishlist/add-remove/',
+        method: 'POST',
+        data: formData,
+        success: function (data) {
+            $(`#add-wishlist-${val}`).empty();
+            if (data.added) {
+                $(`#add-wishlist-${val}`).prepend(
+                    `<i onclick='update_wishlist(${val})' class='ion-ios-heart ml-1' style="color: red; cursor: pointer;"></i>`
+                )
+            } else if (!data.added) {
+                $(`#add-wishlist-${val}`).prepend(
+                    `<i onclick='update_wishlist(${val})' class='ion-ios-heart ml-1' style='cursor: pointer;'></i>`
+                )
+            }
+        },
+        error: function(error) {
+            console.log(error.responseText)
+        }
+    }) 
+}
+
+
+
+function moveToBag(val) {
     let formData = {
         'csrfmiddlewaretoken': csrftoken,
         'product_id': val
@@ -288,8 +317,68 @@ function opened(val) {
                                 </div>
                             </div>
                             <div class="submit-span">
+                                <p class='d-flex ml-6' style="position: absolute; top: -335px;">
+                                    <i onclick="removeFromWishlist(${value.id})" class='ion-ios-close ml-1' style="font-size: 21px; cursor: pointer;"></i>
+                                </p>
                                 <p class='bottom-area d-flex px-3'>
-                                    <button onclick="opened(${value.id})" class='btn buy-now text-center py-2' style='background-color: #ffa45c; color: #ffffff; margin-left: auto; margin-right: auto;'>Move to Bag<span><i class='ion-ios-cart ml-1'></i></span></button>
+                                    <button onclick="moveToBag(${value.id})" class='btn buy-now text-center py-2' style='background-color: #ffa45c; color: #ffffff; margin-left: auto; margin-right: auto;'>Move to Bag<span><i class='ion-ios-cart ml-1'></i></span></button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+                )
+            })    
+        }
+    })
+}
+
+
+
+
+function removeFromWishlist(val) {
+    let formData = {
+        'csrfmiddlewaretoken': csrftoken,
+        'product_id': val
+    }
+    $.ajax({
+        url: '/api/wishlist/remove/',
+        method: 'POST',
+        data: formData,
+        success: function (data) {
+            let navbarCount = $(".navbar-cart-count")
+            navbarCount.text("[" + data.count + "]")
+            $("#product-index").empty();
+            $.each(data.products, function (index, value) { 
+                $("#product-index").prepend(
+                    `<div class="col-sm-3 col-md-3 col-lg-3 ftco-animated">
+                    <div class="product">
+                        <a href='${value.url}' class="img-prod"><img class="img-fluid" src='${value.image_url}'
+                            alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 px-3 text-center">
+                            <h3><a href='${value.url}'>${value.name}</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span class="price-sale">₹${value.price}</span></p>
+                                </div>
+                                <div class="rating">
+                                    <p class="text-right">
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="submit-span">
+                                <p class='d-flex ml-6' style="position: absolute; top: -335px;">
+                                    <i onclick="removeFromWishlist(${value.id})" class='ion-ios-close ml-1' style="font-size: 21px; cursor: pointer;"></i>
+                                </p>
+                                <p class='bottom-area d-flex px-3'>
+                                    <button onclick="moveToBag(${value.id})" class='btn buy-now text-center py-2' style='background-color: #ffa45c; color: #ffffff; margin-left: auto; margin-right: auto;'>Move to Bag<span><i class='ion-ios-cart ml-1'></i></span></button>
                                 </p>
                             </div>
                         </div>

@@ -73,7 +73,7 @@ class ProductManager(models.Manager):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=120)
+    title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(blank=True, unique=True)
     description = models.TextField()
     categories = models.CharField(max_length=120, choices=CATEGORIES, default='t_shirts')

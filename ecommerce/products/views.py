@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 
 from analytics.mixins import ObjectViewedMixin
 from carts.models import Cart
+from wishlist.models import WishList
 from .models import Product
 from orders.models import Order
 from carts.views import cart_products_id
@@ -34,13 +35,11 @@ class ProductListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(
             *args, **kwargs)
-        # if Order.objects.check_existing_cart_id(self.request):
-        #     cart_obj, new_obj = Order.objects.check_existing_cart_id(self.request)
-        # else: 
-        #     cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-        # print(cart_obj)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
+        if self.request.user.is_authenticated():
+            wish_list = WishList.objects.new_or_get(self.request)
+            context['wish_list'] = wish_list
         return context
 
     def get_queryset(self, *args, **kwargs):
@@ -113,6 +112,9 @@ class ProductListFilteredView(ListView):
                         self).get_context_data(*args, **kwargs)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
+        if self.request.user.is_authenticated():
+            wish_list = WishList.objects.new_or_get(self.request)
+            context['wish_list'] = wish_list
         return context
 
     def get_queryset(self, *args, **kwargs):

@@ -7,12 +7,94 @@
 {% url 'cart:home' as cart_url %}
 {% url 'wishlist_views' as wishlist_url %}
 
+<style>
+  @import "compass/css3";
 
+  .p-nav {
+	 margin: 0 0 20px;
+	 text-align: center;
+  }
+ .input-nav {
+	 border: 1px solid #ccc;
+	 font-size: 12px;
+	 height: 30px;
+	 padding: 4px 8px;
+	 position: absolute;
+	 width: 50%;
+}
+ .input-nav:focus {
+	 outline: none;
+}
+ .button-nav {
+	 text-align: center;
+}
+ .button-nav:focus {
+	 outline: none;
+}
+ .button-nav.btn-search, .button-nav.btn-reset {
+	 background: #ffa45c;
+	 border: none;
+	 height: 30px;
+	 font-size: 12px;
+	 padding: 4px;
+	 position: absolute;
+	 width: 30px;
+}
+ .sample {
+	 float: left;
+	 height: 50px;
+	 position: relative;
+	 width: 34%;
+}
+ .sample.one input, .sample.two input {
+	 border-radius: 15px;
+	 right: 0;
+	 transition: all 0.3s ease-in-out;
+	 width: 50%;
+}
+ .sample.one input:focus, .sample.two input:focus {
+	 width: 100%;
+}
+ .sample.one input:focus ~ .button-nav.btn-search, .sample.two input:focus ~ .button-nav.btn-search {
+	 background: #ffa45c;
+	 color: #fff;
+}
+ .sample.one input:focus ~ .button-nav.btn-reset, .sample.two input:focus ~ .button-nav.btn-reset {
+	 right: -22px;
+}
+ .sample.one .button-nav, .sample.two .button-nav {
+	 transition: all 0.3s ease-in-out;
+}
+ .sample.one .button-nav.btn-search, .sample.two .button-nav.btn-search {
+	 background: #ccc;
+	 border-radius: 50%;
+	 height: 26px;
+	 right: 2px;
+	 top: 2px;
+	 transition: all 0.3s ease-in-out;
+	 width: 26px;
+}
+ .sample.one .button-nav.btn-reset, .sample.two .button-nav.btn-reset {
+	 background: #fff;
+	 border: 1px solid #ccc;
+	 border-radius: 50%;
+	 font-size: 10px;
+	 height: 20px;
+	 line-height: 20px;
+	 padding: 0;
+	 right: 5px;
+	 top: 5px;
+	 width: 20px;
+	 z-index: -1;
+}
+ 
+</style>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
   <div class="container">
-    <a class="navbar-brand" href="{{ home_url }}">Winkel</a>
+    <a class="navbar-brand" href="{{ home_url }}" style="margin-bottom: 21px;">Winkel</a>
+    {% include 'search/snippets/search-form.html' %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="oi oi-menu"></span> Menu
@@ -29,8 +111,7 @@
         {% if request.user.is_authenticated %}
         <li class="nav-item {% if request.path == wishlist_url %}active{% endif %}"><a href="{{ wishlist_url }}"
           class="nav-link">Wishlist</a></li>
-        <li class="nav-item {% if request.path == logout_url %}active{% endif %}"><a href="{{ logout_url }}"
-            class="nav-link">Logout</a></li>
+        <li class="nav-item {% if request.path == logout_url %}active{% endif %}"><a href="{{ logout_url }}" class="nav-link">Logout</a></li>
         {% else %}
         <li class="nav-item {% if request.path == register_url %}active{% endif %}"><a href="{{ register_url }}"
             class="nav-link">Register</a></li>
@@ -48,7 +129,6 @@
               </span>
             </a>
         </li>
-        <!-- {% include 'search/snippets/search-form.html' %} -->
       </ul>
     </div>
   </div>

@@ -7,6 +7,7 @@ from billing.models import BillingProfile
 from accounts.models import GuestEmail
 from accounts.forms import LoginForm, GuestForm, RegisterForm
 from orders.models import Order
+from wishlist.models import WishList
 from products.models import Product
 from .models import Cart
 
@@ -40,6 +41,7 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
+    in_wishlist = False
     if product_id is not None:
         try:
             product_obj = Product.objects.get(id=product_id)
@@ -52,6 +54,9 @@ def cart_update(request):
         else:
             cart_obj.products.add(product_obj)
             added = True
+            if request.user.is_authenticated():
+                wish = WishList.objects.new_or_get(request)
+                wish.products.remove(product_obj)
         request.session['cart_items'] = cart_obj.products.count()
         if request.user.is_authenticated:
             billing_profile = BillingProfile.objects.filter(user=request.user)
@@ -60,11 +65,15 @@ def cart_update(request):
                 if not order_id.exists():
                     order_obj = Order.objects.new_or_get(billing_profile[0], cart_obj)
                 
+
+
         if request.is_ajax():
             json_data = {
+                "in_wishlist": in_wishlist,
                 "added": added,
                 "removed": not added,
-                "cartItemCount": cart_obj.products.count()
+                "cartItemCount": cart_obj.products.count(),
+                "product_id": product_id
             }
             return JsonResponse(json_data)
     return redirect("cart:home")

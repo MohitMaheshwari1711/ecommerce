@@ -1,8 +1,8 @@
-<form method="GET" action='{% url "search:query" %}' class="navbar-form navbar-left form my-2 my-lg-0 search-form">
-    <div class="input-group">
-        <input class="form-control" type="search" name="q" placeholder="Search" value='{{ request.GET.q }}' aria-label="Search">
-        <span class="input-group-btn">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </span>
-    </div>
-</form>
+
+
+<div class="sample one">
+    <form method="GET" action='{% url "search:query" %}'>
+        <input class="input-nav" type="search" name="q" placeholder="Search" value='{{ request.GET.q }}' aria-label="Search">
+        <button type="submit" class="btn btn-search button-nav" style="padding: 0px !important"><i class="ion-ios-search"></i></button>
+    </form>
+</div>
