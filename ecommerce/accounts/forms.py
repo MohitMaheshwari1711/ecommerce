@@ -54,12 +54,14 @@ class GuestForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Email', widget=forms.TextInput(
         attrs={
-            "class": "form-control"
+            "class": "form-control",
+            "placeholder": "somebody@example.com"
         })
     )
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
-            "class": "form-control"
+            "class": "form-control",
+            "placeholder": "Password"
         })
     )
 
@@ -84,9 +86,27 @@ class RegisterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-        })
+            if field is 'full_name':
+                self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                "placeholder": 'Full Name'        
+            })
+            if field is 'email':
+                self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                "placeholder": 'Email'        
+            })
+            if field is 'password1':
+                self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                "placeholder": 'Password'        
+            })
+            if field is 'password2':
+                self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                "placeholder": 'Confirm Password'        
+            })
+
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

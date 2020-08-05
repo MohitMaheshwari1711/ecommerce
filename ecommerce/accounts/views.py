@@ -10,6 +10,9 @@ from wishlist.models import WishList
 from .forms import LoginForm, RegisterForm, GuestForm
 from .signals import user_logged_in
 
+
+from django.contrib import messages
+
 def guest_register_view(request):
     form = GuestForm(request.POST or None)
     context = {
@@ -32,7 +35,7 @@ def guest_register_view(request):
 class LoginView(FormView):
     form_class = LoginForm
     success_url = '/'
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/snippets/login-form.html'
 
     def form_valid(self, form):
         request = self.request
@@ -55,9 +58,12 @@ class LoginView(FormView):
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
-                request.session['cart_id'] = Cart.objects.get(user=request.user, active=True).id
-                request.session['cart_items'] = Cart.objects.get(user=request.user, active=True).products.count()
+                if Cart.objects.filter(user=request.user, active=True).exists():
+                    request.session['cart_id'] = Cart.objects.get(user=request.user, active=True).id
+                    request.session['cart_items'] = Cart.objects.get(user=request.user, active=True).products.count()
                 return redirect("/")
+        else:
+            messages.error(self.request,'Login failed !!!')
         return super(LoginView, self).form_invalid(form)
 
 
@@ -126,4 +132,4 @@ def register_page(request):
                 return redirect(redirect_path)
             else:
                 return redirect("/")
-    return render(request, "accounts/register.html", context)
+    return render(request, "accounts/snippets/register-form.html", context)
