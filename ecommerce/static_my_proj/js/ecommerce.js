@@ -178,15 +178,6 @@ $(document).ready(function () {
                                     <div class="pricing">
                                         <p class="price"><span class="price-sale">₹${value.price}</span></p>
                                     </div>
-                                    <div class="rating">
-                                        <p class="text-right">
-                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -306,15 +297,6 @@ function moveToBag(val) {
                                 <div class="pricing">
                                     <p class="price"><span class="price-sale">₹${value.price}</span></p>
                                 </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    </p>
-                                </div>
                             </div>
                             <div class="submit-span">
                                 <p class='d-flex ml-6' style="position: absolute; top: -335px;">
@@ -363,15 +345,6 @@ function removeFromWishlist(val) {
                                 <div class="pricing">
                                     <p class="price"><span class="price-sale">₹${value.price}</span></p>
                                 </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                                    </p>
-                                </div>
                             </div>
                             <div class="submit-span">
                                 <p class='d-flex ml-6' style="position: absolute; top: -335px;">
@@ -388,6 +361,43 @@ function removeFromWishlist(val) {
             })    
         }
     })
+}
+
+
+function small() {
+    document.getElementById("small").style.backgroundColor = '#ffa45c';
+    document.getElementById("medium").style.backgroundColor = 'white';
+    document.getElementById("large").style.backgroundColor = 'white';
+    document.getElementById("extra_large").style.backgroundColor = 'white';
+    
+    document.getElementById("state").removeAttribute("disabled");
+}
+
+function medium() {
+    document.getElementById("small").style.backgroundColor = 'white';
+    document.getElementById("medium").style.backgroundColor = '#ffa45c';
+    document.getElementById("large").style.backgroundColor = 'white';
+    document.getElementById("extra_large").style.backgroundColor = 'white';
+
+    document.getElementById("state").removeAttribute("disabled");
+}
+
+function large() {
+    document.getElementById("small").style.backgroundColor = 'white';
+    document.getElementById("medium").style.backgroundColor = 'white';
+    document.getElementById("large").style.backgroundColor = '#ffa45c';
+    document.getElementById("extra_large").style.backgroundColor = 'white';
+
+    document.getElementById("state").removeAttribute("disabled");
+}
+
+function extra_large() {
+    document.getElementById("small").style.backgroundColor = 'white';
+    document.getElementById("medium").style.backgroundColor = 'white';
+    document.getElementById("large").style.backgroundColor = 'white';
+    document.getElementById("extra_large").style.backgroundColor = '#ffa45c';
+
+    document.getElementById("state").removeAttribute("disabled");
 }
 
 

@@ -6,6 +6,157 @@
 {% block content %}
 
 
+<style>
+    /*** Example Styles ****/
+    body {
+        max-width: 1024px;
+        margin: 20px auto;
+    }
+
+    .example-wrap {
+        display: inline-block;
+    }
+
+    .example {
+        float: left;
+    }
+
+    /***** 1. Rotor ********/
+    @-webkit-keyframes rotor {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes rotor {
+        from {
+            -moz-transform: rotate(0deg);
+        }
+
+        to {
+            -moz-transform: rotate(360deg);
+        }
+    }
+
+    @-o-keyframes rotor {
+        from {
+            -o-transform: rotate(0deg);
+        }
+
+        to {
+            -o-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes rotor {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .button-wrap-1 {
+        width: 120px;
+        height: 120px;
+        margin: 20px 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .button-wrap-1 .clicker {
+        /* Inner circle */
+        width: 100px;
+        height: 100px;
+        /* 20px smaller b/c of margin below */
+        margin: 10px;
+        background-color: #fff;
+        border-radius: 60px;
+        /* Overlays this circle on the .circle */
+        z-index: 2;
+        position: absolute;
+        /* centers the text: adjust to desired size */
+        padding: 22px 10px;
+        text-align: center;
+        /* shadow */
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -o-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-wrap-1 .circle {
+        /** outer circle **/
+        width: 120px;
+        height: 120px;
+        border-radius: 60px;
+        /** image = wedge **/
+        background-image: linear-gradient(45deg, white 0%, white 30%, #14beeb 30%, #14beeb 70%, white 70%, white 100%);
+        /*** outer circle position: under */
+        z-index: 1;
+        position: absolute;
+    }
+
+    .button-wrap-1 .clicker:hover+.circle,
+    .button-wrap-1 .clicker:active+.circle {
+        -webkit-animation: rotor 1.5s linear 0s infinite normal;
+        -mox-animation: rotor 1.5s linear 0s infinite normal;
+        -o-animation: rotor 1.5s linear 0s infinite normal;
+        animation: rotor 1.5s linear 0s infinite normal;
+    }
+
+
+    .button-wrap-2 {
+        width: 60px;
+        height: 50px;
+        margin: 20px 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .button-wrap-2 .circle {
+        /* Inner circle */
+        width: 44px;
+        height: 40px;
+        margin: 4px;
+        background-color: #fff;
+        border-radius: 40px;
+        z-index: 2;
+        position: absolute;
+        padding: 22px 10px;
+        text-align: center;
+        /* shadow */
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -o-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-wrap-2 .outer-circle {
+        /** outer circle **/
+        width: 51px;
+        height: 51px;
+        border-radius: 60px;
+        background-color: #ffff;
+        z-index: 1;
+        position: absolute;
+    }
+
+    .button-wrap-2 .circle:hover+.outer-circle,
+    .button-wrap-2 .circle:active+.outer-circle {
+        -webkit-animation: zoom 1s ease-in 0s 1 both;
+        -mox-animation: zoom 1s ease-in 0s 1 both;
+        -o-animation: zoom 1s ease-in 0s 1 both;
+        animation: zoom 1s ease-in 0s 1 both;
+    }
+</style>
+
 <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg' %});">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -43,32 +194,47 @@
                 </div>
                 <p class="price"><span>₹{{object.price}}</span></p>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="form-group d-flex">
                             <div class="select-wrap">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control">
-                                    <option value="">Small</option>
-                                    <option value="">Medium</option>
-                                    <option value="">Large</option>
-                                    <option value="">Extra Large</option>
-                                </select>
+                                <div class="example-wrap" style="cursor: pointer;">
+                                    <div class="button-wrap-2 example" onclick="small()">
+                                        <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">S</p>
+                                        <div class="outer-circle" id="small"></div>
+                                    </div>
+                                </div>
+                                <div class="example-wrap" style="cursor: pointer;">
+                                    <div class="button-wrap-2 example" onclick="medium()">
+                                        <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">M</p>
+                                        <div class="outer-circle" id="medium"></div>
+                                    </div>
+                                </div>
+                                <div class="example-wrap" style="cursor: pointer;">
+                                    <div class="button-wrap-2 example" onclick="large()">
+                                        <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">L</p>
+                                        <div class="outer-circle" id="large"></div>
+                                    </div>
+                                </div>
+                                <div class="example-wrap" style="cursor: pointer;">
+                                    <div class="button-wrap-2 example" onclick="extra_large()">
+                                        <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">XL</p>
+                                        <div class="outer-circle" id="extra_large"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group col-md-6 d-flex mb-3">
-                        <span class="input-group-btn mr-2">
-                            <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-                                <i class="ion-ios-remove"></i>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-                            min="1" max="100">
-                        <span class="input-group-btn ml-2">
-                            <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                                <i class="ion-ios-add"></i>
-                            </button>
-                        </span>
+                    <div class="input-group col-md-4 d-flex mb-3">
+                        <!-- <div><p>Quantity</p></div> -->
+                        <div>
+                            <label>Quantity</label>
+                            <select name="" id="" class="form-control">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -80,7 +246,8 @@
                     <span id="product-description-color">{{object.split_text.key_2}}</span>
 
                     <p id="product-details-p"><span id="product-details-span"><b>Material & Care</b></span></p>
-                    <span id="product-description-color">{{object.split_text.key_3}}<br />{{object.split_text.key_4}}</span>
+                    <span
+                        id="product-description-color">{{object.split_text.key_3}}<br />{{object.split_text.key_4}}</span>
 
                     <p id="product-details-p"><span id="product-details-span"><b>Specifications</b></span></p>
                     <div class="row">
