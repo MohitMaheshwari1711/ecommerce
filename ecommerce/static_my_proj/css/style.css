@@ -10034,6 +10034,16 @@ textarea.form-control {
 
 
 
+
+
+#cart-item-remove-form {
+  color: #007bff; 
+  height: 1px !important; 
+  border: 0px solid rgba(0, 0, 0, 0.05) !important; 
+  padding: 0px; 
+  cursor: pointer;
+}
+
 @-webkit-keyframes loader-rotate {
   100% {
     -webkit-transform: rotate(360deg);
@@ -10067,5 +10077,283 @@ textarea.form-control {
     stroke-dashoffset: -136px; } }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    .example-wrap {
+        display: inline-block;
+    }
+
+    .example {
+        float: left;
+    }
+
+    /***** 1. Rotor ********/
+    @-webkit-keyframes rotor {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes rotor {
+        from {
+            -moz-transform: rotate(0deg);
+        }
+
+        to {
+            -moz-transform: rotate(360deg);
+        }
+    }
+
+    @-o-keyframes rotor {
+        from {
+            -o-transform: rotate(0deg);
+        }
+
+        to {
+            -o-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes rotor {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .button-wrap-1 {
+        width: 120px;
+        height: 120px;
+        margin: 20px 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .button-wrap-1 .clicker {
+        /* Inner circle */
+        width: 100px;
+        height: 100px;
+        /* 20px smaller b/c of margin below */
+        margin: 10px;
+        background-color: #fff;
+        border-radius: 60px;
+        /* Overlays this circle on the .circle */
+        z-index: 2;
+        position: absolute;
+        /* centers the text: adjust to desired size */
+        padding: 22px 10px;
+        text-align: center;
+        /* shadow */
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -o-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-wrap-1 .circle {
+        /** outer circle **/
+        width: 120px;
+        height: 120px;
+        border-radius: 60px;
+        /** image = wedge **/
+        background-image: linear-gradient(45deg, white 0%, white 30%, #14beeb 30%, #14beeb 70%, white 70%, white 100%);
+        /*** outer circle position: under */
+        z-index: 1;
+        position: absolute;
+    }
+
+    .button-wrap-1 .clicker:hover+.circle,
+    .button-wrap-1 .clicker:active+.circle {
+        -webkit-animation: rotor 1.5s linear 0s infinite normal;
+        -mox-animation: rotor 1.5s linear 0s infinite normal;
+        -o-animation: rotor 1.5s linear 0s infinite normal;
+        animation: rotor 1.5s linear 0s infinite normal;
+    }
+
+
+    .button-wrap-2 {
+        width: 60px;
+        height: 50px;
+        display: inline-block;
+        position: relative;
+    }
+
+    .button-wrap-2 .circle {
+        /* Inner circle */
+        width: 44px;
+        height: 40px;
+        margin: 4px;
+        background-color: #fff;
+        border-radius: 40px;
+        z-index: 2;
+        position: absolute;
+        padding: 22px 10px;
+        text-align: center;
+        /* shadow */
+        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        -o-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-wrap-2 .outer-circle {
+        /** outer circle **/
+        width: 51px;
+        height: 51px;
+        border-radius: 60px;
+        background-color: #ffff;
+        z-index: 1;
+        position: absolute;
+    }
+
+    .button-wrap-2 .circle:hover+.outer-circle,
+    .button-wrap-2 .circle:active+.outer-circle {
+        -webkit-animation: zoom 1s ease-in 0s 1 both;
+        -mox-animation: zoom 1s ease-in 0s 1 both;
+        -o-animation: zoom 1s ease-in 0s 1 both;
+        animation: zoom 1s ease-in 0s 1 both;
+    }
+
+
+
+
+
+    .wrap {
+        position: absolute;
+        right: 0;
+        top: 40%;
+        width: 350px;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    /* select starting stylings ------------------------------*/
+    .select {
+        font-family:
+            'Roboto', 'Helvetica', 'Arial', sans-serif;
+        position: relative;
+        width: 350px;
+    }
+
+    .select-text {
+        position: relative;
+        font-family: inherit;
+        background-color: transparent;
+        width: 350px;
+        padding: 10px 10px 10px 0;
+        font-size: 18px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    /* Remove focus */
+    .select-text:focus {
+        outline: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
+    }
+
+    /* Use custom arrow */
+    .select .select-text {
+        appearance: none;
+        -webkit-appearance: none
+    }
+
+    .select:after {
+        position: absolute;
+        top: 18px;
+        right: 10px;
+        /* Styling the down arrow */
+        width: 0;
+        height: 0;
+        padding: 0;
+        content: '';
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid rgba(0, 0, 0, 0.12);
+        pointer-events: none;
+    }
+
+
+    /* LABEL ======================================= */
+    .select-label {
+        color: rgba(0, 0, 0, 0.26);
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 0;
+        top: 10px;
+        transition: 0.2s ease all;
+    }
+
+    /* active state */
+    .select-text:focus~.select-label,
+    .select-text:valid~.select-label {
+        color: #2F80ED;
+        top: -20px;
+        transition: 0.2s ease all;
+        font-size: 14px;
+    }
+
+    /* BOTTOM BARS ================================= */
+    .select-bar {
+        position: relative;
+        display: block;
+        width: 350px;
+    }
+
+    .select-bar:before,
+    .select-bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #2F80ED;
+        transition: 0.2s ease all;
+    }
+
+    .select-bar:before {
+        left: 50%;
+    }
+
+    .select-bar:after {
+        right: 50%;
+    }
+
+    /* active state */
+    .select-text:focus~.select-bar:before,
+    .select-text:focus~.select-bar:after {
+        width: 50%;
+    }
+
+    /* HIGHLIGHTER ================================== */
+    .select-highlight {
+        position: absolute;
+        height: 60%;
+        width: 100px;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+    }
 
 

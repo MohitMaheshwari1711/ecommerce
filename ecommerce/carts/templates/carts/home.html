@@ -24,21 +24,25 @@
                                 <th>#</th>
                                 <th>&nbsp;</th>
                                 <th>Product</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
                         <tbody class="cart-body">
                             {% for product in cart.products.all %}
                             <tr class="text-center cart-product">
-                                <td class="product-name">{{ forloop.counter }}</td>
+                                <td class="product-quantity">{{ forloop.counter }}</td>
                                 <td class="image-prod">
-                                    <div class="img" style="background-image:url('{{ product.image.url }}');"></div>
+                                    <div class="img" style="background-image:url('{{ product.item.image.url }}');"></div>
                                 </td>
                                 <td class="product-name">
-                                    <h3>{{ product.title }}</h3>
-                                    {% include 'carts/snippets/remove-product.html' with product_id=product.id %}
+                                    <h3>{{ product.item.title }}</h3>
+                                    <button class="btn btn-link btn-sm" id="cart-item-remove-form" onclick="remove_from_cart({{ product }})">Remove ?</button>
                                 </td>
-                                <td class="price">₹{{ product.price }}</td>
+                                <td class="price">{{ product.size }}</td>
+                                <td class="price">X {{ product.quantity }}</td>
+                                <td class="price">₹ {{ product.calculate_total }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -55,7 +59,7 @@
                     <h3>Cart Totals</h3>
                     <p class="d-flex">
                         <span>Subtotal</span>
-                        <span class="cart-subtotal">₹{{ cart.subtotal }}</span>
+                        <span class="cart-subtotal">₹ {{ cart.subtotal }}</span>
                     </p>
                     <p class="d-flex">
                         <span>Discount</span>
@@ -64,7 +68,7 @@
                     <hr>
                     <p class="d-flex total-price">
                         <span>Total (tax included)</span>
-                        <span class="cart-total-2">₹{{ cart.total }}</span>
+                        <span class="cart-total-2">₹ {{ cart.total }}</span>
                     </p>
                 </div>
                 <p class="text-center"><a href='{% url "cart:checkout" %}' class="btn btn-primary py-3 px-4">Proceed to Checkout</a>

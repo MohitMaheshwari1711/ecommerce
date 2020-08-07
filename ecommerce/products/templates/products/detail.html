@@ -6,157 +6,6 @@
 {% block content %}
 
 
-<style>
-    /*** Example Styles ****/
-    body {
-        max-width: 1024px;
-        margin: 20px auto;
-    }
-
-    .example-wrap {
-        display: inline-block;
-    }
-
-    .example {
-        float: left;
-    }
-
-    /***** 1. Rotor ********/
-    @-webkit-keyframes rotor {
-        from {
-            -webkit-transform: rotate(0deg);
-        }
-
-        to {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @-moz-keyframes rotor {
-        from {
-            -moz-transform: rotate(0deg);
-        }
-
-        to {
-            -moz-transform: rotate(360deg);
-        }
-    }
-
-    @-o-keyframes rotor {
-        from {
-            -o-transform: rotate(0deg);
-        }
-
-        to {
-            -o-transform: rotate(360deg);
-        }
-    }
-
-    @keyframes rotor {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    .button-wrap-1 {
-        width: 120px;
-        height: 120px;
-        margin: 20px 0;
-        display: inline-block;
-        position: relative;
-    }
-
-    .button-wrap-1 .clicker {
-        /* Inner circle */
-        width: 100px;
-        height: 100px;
-        /* 20px smaller b/c of margin below */
-        margin: 10px;
-        background-color: #fff;
-        border-radius: 60px;
-        /* Overlays this circle on the .circle */
-        z-index: 2;
-        position: absolute;
-        /* centers the text: adjust to desired size */
-        padding: 22px 10px;
-        text-align: center;
-        /* shadow */
-        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-        -o-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-    }
-
-    .button-wrap-1 .circle {
-        /** outer circle **/
-        width: 120px;
-        height: 120px;
-        border-radius: 60px;
-        /** image = wedge **/
-        background-image: linear-gradient(45deg, white 0%, white 30%, #14beeb 30%, #14beeb 70%, white 70%, white 100%);
-        /*** outer circle position: under */
-        z-index: 1;
-        position: absolute;
-    }
-
-    .button-wrap-1 .clicker:hover+.circle,
-    .button-wrap-1 .clicker:active+.circle {
-        -webkit-animation: rotor 1.5s linear 0s infinite normal;
-        -mox-animation: rotor 1.5s linear 0s infinite normal;
-        -o-animation: rotor 1.5s linear 0s infinite normal;
-        animation: rotor 1.5s linear 0s infinite normal;
-    }
-
-
-    .button-wrap-2 {
-        width: 60px;
-        height: 50px;
-        margin: 20px 0;
-        display: inline-block;
-        position: relative;
-    }
-
-    .button-wrap-2 .circle {
-        /* Inner circle */
-        width: 44px;
-        height: 40px;
-        margin: 4px;
-        background-color: #fff;
-        border-radius: 40px;
-        z-index: 2;
-        position: absolute;
-        padding: 22px 10px;
-        text-align: center;
-        /* shadow */
-        -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-        -o-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-    }
-
-    .button-wrap-2 .outer-circle {
-        /** outer circle **/
-        width: 51px;
-        height: 51px;
-        border-radius: 60px;
-        background-color: #ffff;
-        z-index: 1;
-        position: absolute;
-    }
-
-    .button-wrap-2 .circle:hover+.outer-circle,
-    .button-wrap-2 .circle:active+.outer-circle {
-        -webkit-animation: zoom 1s ease-in 0s 1 both;
-        -mox-animation: zoom 1s ease-in 0s 1 both;
-        -o-animation: zoom 1s ease-in 0s 1 both;
-        animation: zoom 1s ease-in 0s 1 both;
-    }
-</style>
-
 <div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg' %});">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -176,64 +25,56 @@
             </div>
             <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                 <h3>{{object.title}}</h3>
-                <div class="rating d-flex">
-                    <p class="text-left mr-4">
-                        <a href="#" class="mr-2">5.0</a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    </p>
-                    <p class="text-left mr-4">
-                        <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-                    </p>
-                    <p class="text-left">
-                        <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-                    </p>
-                </div>
                 <p class="price"><span>₹{{object.price}}</span></p>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group d-flex">
                             <div class="select-wrap">
                                 <div class="example-wrap" style="cursor: pointer;">
-                                    <div class="button-wrap-2 example" onclick="small()">
+                                    <div class="button-wrap-2 example" onclick="small({{object.id}})">
                                         <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">S</p>
-                                        <div class="outer-circle" id="small"></div>
+                                        <div class="outer-circle" id="small-{{object.id}}"></div>
                                     </div>
                                 </div>
                                 <div class="example-wrap" style="cursor: pointer;">
-                                    <div class="button-wrap-2 example" onclick="medium()">
+                                    <div class="button-wrap-2 example" onclick="medium({{object.id}})">
                                         <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">M</p>
-                                        <div class="outer-circle" id="medium"></div>
+                                        <div class="outer-circle" id="medium-{{object.id}}"></div>
                                     </div>
                                 </div>
                                 <div class="example-wrap" style="cursor: pointer;">
-                                    <div class="button-wrap-2 example" onclick="large()">
+                                    <div class="button-wrap-2 example" onclick="large({{object.id}})">
                                         <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">L</p>
-                                        <div class="outer-circle" id="large"></div>
+                                        <div class="outer-circle" id="large-{{object.id}}"></div>
                                     </div>
                                 </div>
                                 <div class="example-wrap" style="cursor: pointer;">
-                                    <div class="button-wrap-2 example" onclick="extra_large()">
+                                    <div class="button-wrap-2 example" onclick="extra_large({{object.id}})">
                                         <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">XL</p>
-                                        <div class="outer-circle" id="extra_large"></div>
+                                        <div class="outer-circle" id="extra_large-{{object.id}}"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="input-group col-md-4 d-flex mb-3">
-                        <!-- <div><p>Quantity</p></div> -->
-                        <div>
-                            <label>Quantity</label>
-                            <select name="" id="" class="form-control">
-                                <option value="">1</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
+                        <div class="select">
+                            <select class="select-text" id="quantity-select-{{object.id}}" style="width: 100px;"
+                                onchange="quantity_change(event)" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
+                            <span class="select-highlight" style="width: 100px;"></span>
+                            <span class="select-bar" style="width: 100px;"></span>
+                            <label class="select-label" style="width: 100px;">Quantity</label>
                         </div>
                     </div>
                 </div>
@@ -603,7 +444,7 @@
 
                 </div>
                 <div>
-                    {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+                    <button disabled class="btn" id="state-{{object.id}}" onclick="add_to_cart({{object.id}})" style="background-color: #ffa45c !important; color: white; border-radius: 50px;">Add to cart</button>
                 </div>
             </div>
         </div>

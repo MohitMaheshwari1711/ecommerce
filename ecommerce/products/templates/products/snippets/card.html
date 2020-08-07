@@ -9,20 +9,106 @@
             <h3><a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></h3>
             <div class="d-flex">
                 <div class="pricing">
-                    <p class="price"><span class="price-sale">₹{{instance.price}}</span>
+                    <p class="price"><span class="price-sale">₹ {{instance.price}}</span>
                     </p>
                 </div>
-                <!-- <div class="rating">
-                    <p class="text-right">
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        <a href="#"><span class="ion-ios-star-outline"></span></a>
-                    </p>
-                </div> -->
             </div>
-            {% include 'products/snippets/add-remove-button.html' with product=instance cart=cart wishlist=wish_list %}
+            {% if instance in wish_list.products.all %}
+            <p id='add-wishlist-{{ instance.id }}' class='d-flex ml-6' style="position: absolute; top: -364px;">
+                <i class='ion-ios-heart ml-1' style="color: red; cursor: pointer;"
+                    onclick='update_wishlist({{ instance.id }})'></i>
+            </p>
+            {% else %}
+            <p id='add-wishlist-{{ instance.id }}' class='d-flex ml-6' style="position: absolute; top: -364px;">
+                <i class='ion-ios-heart ml-1' style="cursor: pointer;"
+                    onclick='update_wishlist({{ instance.id }})'></i>
+            </p>
+            {% endif %}
+            <p class='bottom-area d-flex px-3'>
+                <button class='btn add-to-cart text-center py-2 mr-1' data-toggle="modal"
+                    data-target="#myModal{{instance.id}}" onclick="onOpen({{instance.id}})"
+                    style='background-color: #ffa45c; color: #ffffff; margin-left: 24%;'><span>Add to
+                        cart <i class='ion-ios-add ml-1'></i></span></button>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="myModal{{instance.id}}" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{instance.title}}</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                    onclick="clear_modal_values({{instance.id}})">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div style="float: left; width: 30%;">
+                    <a href="{{ instance.get_absolute_url }}" class="img-prod">
+                        <img class="img-fluid" src='{{ instance.image.url }}' style="width: 150px; height: 200px;"
+                            alt="Colorlib Template">
+                    </a>
+                </div>
+                <div style="float: left; width: 70%; padding-left: 15px;">
+                    <p class="price"><span class="price-sale">₹ {{instance.price}}</span></p>
+                    <div class="example-wrap" style="cursor: pointer;">
+                        <div class="button-wrap-2 example" onclick="small({{instance.id}})">
+                            <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">S</p>
+                            <div class="outer-circle" id="small-{{instance.id}}"></div>
+                        </div>
+                    </div>
+                    <div class="example-wrap" style="cursor: pointer;">
+                        <div class="button-wrap-2 example" onclick="medium({{instance.id}})">
+                            <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">M</p>
+                            <div class="outer-circle" id="medium-{{instance.id}}"></div>
+                        </div>
+                    </div>
+                    <div class="example-wrap" style="cursor: pointer;">
+                        <div class="button-wrap-2 example" onclick="large({{instance.id}})">
+                            <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">L</p>
+                            <div class="outer-circle" id="large-{{instance.id}}"></div>
+                        </div>
+                    </div>
+                    <div class="example-wrap" style="cursor: pointer;">
+                        <div class="button-wrap-2 example" onclick="extra_large({{instance.id}})">
+                            <p class="circle" style="padding-top: 8px; padding-bottom: 36px;">XL</p>
+                            <div class="outer-circle" id="extra_large-{{instance.id}}"></div>
+                        </div>
+                    </div>
+
+                    <div class="select" style="margin-top: 2rem;">
+                        <select class="select-text" id="quantity-select-{{instance.id}}" style="width: 100px;"
+                            onchange="quantity_change(event)" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <span class="select-highlight" style="width: 100px;"></span>
+                        <span class="select-bar" style="width: 100px;"></span>
+                        <label class="select-label" style="width: 100px;">Quantity</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="state-{{instance.id}}" data-dismiss="modal"
+                    onclick="add_to_cart({{instance.id}})"
+                    style="background-color: #ffa45c !important; color: white; border-radius: 50px;">Add to
+                    cart</button>
+            </div>
         </div>
     </div>
 </div>

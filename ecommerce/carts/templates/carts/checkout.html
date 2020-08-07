@@ -22,17 +22,87 @@
                 {% if not billing_profile %}
                 <div class="row radio justify-content-center">
                     <label class="mr-4">
-                        <input type="radio" name="user" class="checking-1" checked> Login
+                        <input type="radio" name="user" class="login-radio" checked> Login
                     </label>
                     <label>
-                        <input type="radio" name="user" class="checking-2"> Create an Account?
+                        <input type="radio" name="user" class="register-radio"> Create an Account?
                     </label>
                 </div>
                 <div class="form-1">
-                    {% include 'accounts/snippets/login-form.html' with form=login_form next_url=request.build_absolute_uri %}
+                    <form method="POST" id="login_data"
+                        action='{% if action_url %}{{ action_url }}{% else %}{% url "login" %}{% endif %}'
+                        class="billing-form"> {% csrf_token %}
+                        {% if request.build_absolute_uri %}
+                        <input type="hidden" name="next" value='{{ request.build_absolute_uri }}' />
+                        {% endif %}
+                        <h3 class="mb-4 billing-heading">Login</h3>
+                        <div class="row align-items-end">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    {{login_form.email}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    {{ login_form.password }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-7" style="padding-left: 52px;">
+                                <p><a href="javascript:$('#login_data').submit();"
+                                        class="btn btn-primary py-3 px-5">Login</a></p>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="form-2" style="display: none;">
-                    {% include 'accounts/snippets/register-form.html' with form=register_form next_url=request.build_absolute_uri %}
+            
+                    <form method="POST" id="register_data"
+                        action='{% if action_url %}{{ action_url }}{% else %}{% url "register" %}{% endif %}'
+                        class="billing-form"> {% csrf_token %}
+                        {% if request.build_absolute_uri %}
+                        <input type="hidden" name="next" value='{{ request.build_absolute_uri }}' />
+                        {% endif %}
+                        <h3 class="mb-4 billing-heading">Register User</h3>
+                        <div class="row align-items-end">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Full Name</label>
+                                    {{register_form.full_name}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    {{register_form.email}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Password</label>
+                                    {{register_form.password1}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Password Confirmation</label>
+                                    {{register_form.password2}}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-7" style="padding-left: 52px;">
+                                <p><a href="javascript:$('#register_data').submit();"
+                                        class="btn btn-primary py-3 px-5">Submit</a></p>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 {% else %}
                 {% if not object.shipping_address %}
@@ -94,7 +164,8 @@
                                 <span style="width: 60%;">₹{{object.total}}</span>
                             </p>
                             <form id="confirm-order" class="form" method="POST" action="">{% csrf_token %}
-                                <p><a href="javascript:$('#confirm-order').submit();" class="btn btn-primary py-3 px-4">Place an order</a></p>
+                                <p><a href="javascript:$('#confirm-order').submit();"
+                                        class="btn btn-primary py-3 px-4">Place an order</a></p>
                             </form>
                         </div>
                     </div>
