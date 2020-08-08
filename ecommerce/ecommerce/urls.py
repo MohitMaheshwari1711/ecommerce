@@ -21,11 +21,11 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 
 from products.views import ProductListFilteredView, product_detail_api_view
-
 from wishlist.views import get_wish_list, wish_list_remove, add_remove_wishlist, wish_list_all
 from accounts.views import LoginView, register_page, guest_register_view
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from carts.views import cart_detail_api_view, cart_add, cart_remove
+from billing.views import payment_method_view, payment_method_createview
 from .views import home_page, about_page, contact_page
 
 urlpatterns = [
@@ -33,10 +33,13 @@ urlpatterns = [
     url(r'^about/$', about_page, name='about'),
     url(r'^contact/$', contact_page, name='contact'),
     url(r'^login/$', LoginView.as_view(), name='login'),
-    url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
-    url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
+    url(r'^register/$', register_page, name='register'),
+    url(r'^admin/', admin.site.urls),
     url(r'^register/guest/$', guest_register_view, name='guest_register'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+
+    url(r'^checkout/address/create/$', checkout_address_create_view, name='checkout_address_create'),
+    url(r'^checkout/address/reuse/$', checkout_address_reuse_view, name='checkout_address_reuse'),
 
     url(r'^cart/', include("carts.urls", namespace="cart")),
     url(r'^api/cart/$', cart_detail_api_view, name='api-cart'),
@@ -53,8 +56,8 @@ urlpatterns = [
     url(r'^list/(?P<value>\w+)/$', ProductListFilteredView.as_view(), name='filtered_list'),
     url(r'^search/', include("search.urls", namespace="search")),
 
-    url(r'^register/$', register_page, name='register'),
-    url(r'^admin/', admin.site.urls),
+    url(r'^billing/payment$', payment_method_view, name='payment_method_view'),
+    url(r'^billing/payment/create$', payment_method_createview, name='payment_method_createview'),
 ]
 
 if settings.DEBUG:

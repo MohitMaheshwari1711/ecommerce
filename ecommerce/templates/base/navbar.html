@@ -6,6 +6,7 @@
 {% url 'register' as register_url %}
 {% url 'cart:home' as cart_url %}
 {% url 'wishlist_views' as wishlist_url %}
+{% url 'payment_method_view' as payment_method_view %}
 
 
 
@@ -13,7 +14,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
   <div class="container">
     <a class="navbar-brand" href="{{ home_url }}" style="margin-bottom: 21px;">oneStop</a>
-    {% include 'search/snippets/search-form.html' %}
+    {% ifnotequal request.path payment_method_view %}
+      {% include 'search/snippets/search-form.html' %}
+    {% endifnotequal %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="oi oi-menu"></span> Menu
