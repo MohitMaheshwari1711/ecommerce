@@ -65,7 +65,7 @@ $(document).ready(function () {
                     card.clear();
                     createSnackbar(data.message);
                     setTimeout(() => {
-                        window.location.href = nextURL
+                        window.location.href = `${window.location.origin}/cart/checkout`
                     }, 1500);
                 },
                 error: function (error) {

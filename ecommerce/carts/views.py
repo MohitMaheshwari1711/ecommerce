@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from addresses.forms import AddressForm
 from addresses.models import Address
-from billing.models import BillingProfile
+from billing.models import BillingProfile, Card, Charge
 from accounts.models import GuestEmail
 from accounts.forms import LoginForm, GuestForm, RegisterForm
 from orders.models import Order
@@ -17,17 +17,8 @@ from .models import Cart, CartItem
 
 User_cart = settings.AUTH_USER_MODEL
 
-# def cart_detail_api_view(request):
-#     cart_obj, new_obj = Cart.objects.new_or_get(request)
-#     products = [{
-#         "id": x.id,
-#         "url": x.get_absolute_url(),
-#         "name": x.title,
-#         "price": x.price,
-#         "image_url": x.image.url
-#         } for x in cart_obj.products.all()]
-#     cart_data = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
-#     return JsonResponse(cart_data)
+STRIPE_PUB_KEY = getattr(settings, "STRIPE_PUB_KEY")
+
 
 
 def cart_products_id(request):
@@ -43,44 +34,6 @@ def cart_home(request):
     return render(request, "carts/home.html", {"cart": cart_obj})
 
 
-# def cart_update(request):
-#     product_id = request.POST.get('product_id')
-#     in_wishlist = False
-#     if product_id is not None:
-#         try:
-#             product_obj = Product.objects.get(id=product_id)
-#         except:
-#             return redirect("cart:home")
-#         cart_obj, new_obj = Cart.objects.new_or_get(request)
-#         if product_obj in cart_obj.products.all():
-#             cart_obj.products.remove(product_obj)
-#             added = False
-#         else:
-#             cart_obj.products.add(product_obj)
-#             added = True
-#             if request.user.is_authenticated():
-#                 wish = WishList.objects.new_or_get(request)
-#                 wish.products.remove(product_obj)
-#         request.session['cart_items'] = cart_obj.products.count()
-#         if request.user.is_authenticated:
-#             billing_profile = BillingProfile.objects.filter(user=request.user)
-#             if billing_profile.exists():
-#                 order_id = Order.objects.filter(billing_profile=billing_profile, status='created')
-#                 if not order_id.exists():
-#                     order_obj = Order.objects.new_or_get(billing_profile[0], cart_obj)
-                
-
-
-#         if request.is_ajax():
-#             json_data = {
-#                 "in_wishlist": in_wishlist,
-#                 "added": added,
-#                 "removed": not added,
-#                 "cartItemCount": cart_obj.products.count(),
-#                 "product_id": product_id
-#             }
-#             return JsonResponse(json_data)
-#     return redirect("cart:home")
 
 
 def checkout_home(request):
@@ -98,7 +51,7 @@ def checkout_home(request):
     billing_profile, billing_guest_profile_created = BillingProfile.objects.new_or_get(
         request)
     address_qs = None
-
+    has_card = False
     if billing_profile is not None:
         if request.user.is_authenticated():
             address_qs = Address.objects.filter(billing_profile=billing_profile)
@@ -111,16 +64,27 @@ def checkout_home(request):
             del request.session["billing_address_id"]    
         if billing_address_id or shipping_address_id:
             order_obj.save()
+        has_card = billing_profile.has_card
 
-
-    if request.method == "POST":
-        is_done = order_obj.check_done()
-        if is_done:
-            order_obj.mark_paid(request)
+    if request.user.is_authenticated:
+        temp = billing_profile.charge(order_obj)
+        if temp[0]:
+            order_obj.mark_paid(request, billing_profile)
             request.session['cart_items'] = 0
             del request.session['cart_id']
             return redirect("cart:success")
 
+    if request.method == "POST":
+        is_prepared = order_obj.check_done()
+        if is_prepared:
+            did_charge, crg_msg = billing_profile.charge(order_obj)
+            if did_charge:
+                order_obj.mark_paid(request, billing_profile)
+                request.session['cart_items'] = 0
+                del request.session['cart_id']
+                return redirect("cart:success")
+            else:
+                return redirect("payment_method_view")
     context = {
         "object": order_obj,
         "billing_profile": billing_profile,
@@ -128,7 +92,9 @@ def checkout_home(request):
         "guest_form": guest_form,
         "register_form": register_form,
         "address_form": address_form,
-        "address_qs": address_qs
+        "address_qs": address_qs,
+        "has_card": has_card,
+        "publish_key": STRIPE_PUB_KEY,
     }
     return render(request, "carts/checkout.html", context)
 

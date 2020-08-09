@@ -49,8 +49,8 @@
         
         {% endblock %}
     </div>
-    {% url 'payment_method_view' as payment_method_view %}
-    {% ifnotequal request.path payment_method_view %}
+    {% url 'cart:checkout' as cart %}
+    {% ifnotequal request.path cart %}
     <footer class="ftco-footer bg-light ftco-section">
         <div class="container">
             <div class="row">

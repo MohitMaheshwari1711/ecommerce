@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 
 from addresses.models import Address
-from billing.models import BillingProfile
+from billing.models import BillingProfile, Card
 from carts.models import Cart
 from accounts.models import User
 from ecommerce.utils import unique_order_id_generator
@@ -77,9 +77,10 @@ class Order(models.Model):
             return True
         return False
 
-    def mark_paid(self, request):
+    def mark_paid(self, request, billing_profile):
         if self.check_done():
             self.status = "paid"
+            Card.objects.filter(billing_profile=billing_profile, default=True).update(default=False)
             Cart.objects.filter(user=request.user, active=True).update(active=False)
             self.save()
         return self.status
