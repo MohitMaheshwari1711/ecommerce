@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'analytics',
     'billing',
     'accounts',
+    'marketing',
     'carts',
     'products',
     'search',
@@ -56,8 +57,12 @@ FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
 
-STRIPE_SECRET_KEY = "sk_test_pd1M51sRErZ1PUOTDmXHrAhP00KUlkIqSJ"
-STRIPE_PUB_KEY = "pk_test_Lu0jVoHvtI5YLmwsKKEWTd8U00T8zswEbg"
+STRIPE_SECRET_KEY = '***************************************'
+STRIPE_PUB_KEY = '***************************************'
+
+MAILCHIMP_API_KEY = '***************************************'
+MAILCHIMP_DATA_CENTER = '***************************************'
+MAILCHIMP_EMAIL_LIST_ID = '***************************************'
 
 
 MIDDLEWARE = [
