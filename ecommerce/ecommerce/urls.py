@@ -27,6 +27,7 @@ from accounts.views import LoginView, register_page, guest_register_view
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from carts.views import cart_detail_api_view, cart_add, cart_remove
 from billing.views import payment_method_view, payment_method_createview
+from marketing.views import MarketingPreferenceUpdateView
 from .views import home_page, about_page, contact_page
 
 urlpatterns = [
@@ -56,6 +57,8 @@ urlpatterns = [
     url(r'^products/', include("products.urls", namespace="products")),
     url(r'^list/(?P<value>\w+)/$', ProductListFilteredView.as_view(), name='filtered_list'),
     url(r'^search/', include("search.urls", namespace="search")),
+
+    url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(), name='marketing-pref'),
 
     url(r'^billing/payment$', payment_method_view, name='payment_method_view'),
     url(r'^billing/payment/create$', payment_method_createview, name='payment_method_createview'),

@@ -37,6 +37,12 @@ class LoginView(FormView):
     success_url = '/'
     template_name = 'accounts/snippets/login-form.html'
 
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return redirect("/")
+        return super(LoginView, self).dispatch(*args, **kwargs)
+
+
     def form_valid(self, form):
         request = self.request
         next_ = request.GET.get('next')

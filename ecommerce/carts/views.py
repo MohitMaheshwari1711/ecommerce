@@ -11,7 +11,6 @@ from wishlist.models import WishList
 from products.models import Product
 
 
-
 from .models import Cart, CartItem
 
 
