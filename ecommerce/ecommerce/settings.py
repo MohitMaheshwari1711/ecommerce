@@ -56,8 +56,8 @@ FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
 
-STRIPE_SECRET_KEY = '***************************************'
-STRIPE_PUB_KEY = '***************************************'
+STRIPE_SECRET_KEY = "sk_test_pd1M51sRErZ1PUOTDmXHrAhP00KUlkIqSJ"
+STRIPE_PUB_KEY = "pk_test_Lu0jVoHvtI5YLmwsKKEWTd8U00T8zswEbg"
 
 
 MIDDLEWARE = [

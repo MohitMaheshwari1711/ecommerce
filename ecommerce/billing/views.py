@@ -17,7 +17,6 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 def payment_method_view(request):
     billing_profile = BillingProfile.objects.new_or_get(request)
-    print(billing_profile)
     if not billing_profile[0]:
         return redirect("/cart")
     next_url = None
