@@ -4,8 +4,7 @@ from django.conf import settings
 from addresses.forms import AddressForm
 from addresses.models import Address
 from billing.models import BillingProfile, Card, Charge
-from accounts.models import GuestEmail
-from accounts.forms import LoginForm, GuestForm, RegisterForm
+from accounts.forms import LoginForm, RegisterForm
 from orders.models import Order
 from wishlist.models import WishList
 from products.models import Product
@@ -42,7 +41,6 @@ def checkout_home(request):
         return redirect("cart:home")
 
     login_form = LoginForm()
-    guest_form = GuestForm()
     register_form = RegisterForm()
     address_form = AddressForm()
     billing_address_id = request.session.get("billing_address_id", None)
@@ -88,7 +86,6 @@ def checkout_home(request):
         "object": order_obj,
         "billing_profile": billing_profile,
         "login_form": login_form,
-        "guest_form": guest_form,
         "register_form": register_form,
         "address_form": address_form,
         "address_qs": address_qs,

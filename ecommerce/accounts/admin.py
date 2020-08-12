@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminChangeForm, UserAdminCreationForm
-from .models import GuestEmail
+from .models import Profile
 
 User = get_user_model()
 
@@ -16,7 +16,7 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'admin')
+    list_display = ('email', 'admin', 'active')
     list_filter = ('admin', 'staff', 'active')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
@@ -38,10 +38,4 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
 
- 
-class GuestEmailAdmin(admin.ModelAdmin):
-    search_fields = ['email']
-    class Meta:
-        model = GuestEmail
-
-admin.site.register(GuestEmail, GuestEmailAdmin)
+admin.site.register(Profile)

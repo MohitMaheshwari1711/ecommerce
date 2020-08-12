@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseServerError
 from django.conf import settings
-from accounts.models import GuestEmail
+# from accounts.models import GuestEmail
 
 from products.models import Product
 from carts.models import Cart

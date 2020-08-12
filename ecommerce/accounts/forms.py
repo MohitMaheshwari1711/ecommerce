@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
-# from .models import User
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -43,12 +42,12 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 
-class GuestForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(
-        attrs={
-            "class": "form-control"
-        })
-    )
+# class GuestForm(forms.Form):
+#     email = forms.EmailField(widget=forms.TextInput(
+#         attrs={
+#             "class": "form-control"
+#         })
+#     )
 
 
 class LoginForm(forms.Form):
@@ -115,63 +114,29 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
+
+
+
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        # user.active = False
+        user.active = False
         if commit:
             user.save()
         return user
 
 
-
-
-
-# class RegisterForm(forms.Form):
-#     username = forms.CharField(widget=forms.TextInput(
-#         attrs={
-#             "class": "form-control",
-#             "placeholder": "Username"
-#         })
-#     )
-#     email = forms.EmailField(widget=forms.EmailInput(
-#         attrs={
-#             "class": "form-control",
-#             "placeholder": "Your email"
-#         })
-#     )
-#     password = forms.CharField(widget=forms.PasswordInput(
-#         attrs={
-#             "class": "form-control",
-#             "placeholder": "Password"
-#         })
-#     )
-#     password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput(
-#         attrs={
-#             "class": "form-control",
-#             "placeholder": "Confirm Password"
-#         })
-#     )
-
-#     def clean_username(self):
-#         username = self.cleaned_data.get('username')
-#         qs = User.objects.filter(username=username)
-#         if qs.exists():
-#             raise forms.ValidationError("Username is taken")
-#         return username
-
-#     def clean_email(self):
-#         email = self.cleaned_data.get('email')
-#         qs = User.objects.filter(email=email)
-#         if qs.exists():
-#             raise forms.ValidationError("email is taken")
-#         return email
-
-#     def clean(self):
-#         data = self.cleaned_data
-#         password = self.cleaned_data.get('password')
-#         password2 = self.cleaned_data.get('password2')
-
-#         if password2 != password:
-#             raise forms.ValidationError("Passwords must match")
-#         return data
+    def sendEmail(self, request, data):
+        if request.is_secure():
+            link = "https://{host}/activate/".format(host=request.get_host())+data['activation_key']
+        else:
+            link = "http://{host}/activate/".format(host=request.get_host())+data['activation_key']
+        # link="http://yourdomain.com/activate/"+data['activation_key']
+        message='Please click on the link below to activate your account \n\n {link} \n\n Regrads,\nTeam Onsestop'.format(link=link)
+        return send_mail(
+            data['email_subject'], 
+            message, 
+            'OneStop <no-reply@onsestop.com>', 
+            [data['email']], 
+            fail_silently=False
+        )

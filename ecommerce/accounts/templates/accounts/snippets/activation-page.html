@@ -1,0 +1,12 @@
+{% load static %}
+
+{% if activation_expired %}
+<div>
+    <h4>Your activation key has expired. Please check your mail for the new key</h4>
+</div>
+{% else %}
+<div>
+    <h4>Your activation key has expired. Please check your mail for the new key</h4>
+    <a href="{% url 'login' %}">Click here to login</a>
+</div>
+{% endif %}

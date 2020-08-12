@@ -88,11 +88,9 @@ class User(AbstractBaseUser):
 
 
 
-class GuestEmail(models.Model):
-    email = models.EmailField()
-    active = models.BooleanField(default=True)
-    update = models.DateTimeField(auto_now=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.email
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, related_name='profile') #1 to 1 link with Django User
+    activation_key = models.CharField(max_length=40)
+    key_expires = models.DateTimeField()

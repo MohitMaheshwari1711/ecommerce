@@ -64,6 +64,15 @@ MAILCHIMP_API_KEY = '***************************************'
 MAILCHIMP_DATA_CENTER = '***************************************'
 MAILCHIMP_EMAIL_LIST_ID = '***************************************'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '***************************************'
+EMAIL_HOST_PASSWORD = '***************************************'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
