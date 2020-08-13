@@ -10,7 +10,6 @@ from orders.models import Order
 from carts.views import cart_products_id
 
 
-
 product_id = None
 
 

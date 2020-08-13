@@ -54,6 +54,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
+ecommerce/ecommerce/settings/production.py
 
 # Flask stuff:
 instance/
@@ -82,6 +83,7 @@ celerybeat-schedule
 
 # dotenv
 .env
+
 
 # virtualenv
 .venv
